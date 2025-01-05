@@ -14,33 +14,34 @@
  * limitations under the License.                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-/* =================== VINE EDITOR ====================
- *
- * Vine is a fork of the modified version of "Kilo" by Snaptoken,
- * which is licensed under the BSD-Clause-2 License, while all
- * of the modified pieces of code are released Apache License 2.0.
- * Please abide to the fitting licenses under the fitting
- * circumstances.
- *
- * Thank you Salvatore Sanfilippo (antirez on github.com) for
- * making the original "Kilo" editor & thank you Paige Ruten
- * (paigeruten on github.com, but the project I forked is on her
- * "tutorial account"; snaptoken) for making the slightly modified
- * version. Speaking about Snaptoken, she has a really good tutorial
- * on Kilo, which I followed to make this editor, check it out on
- * <https://viewsourcecode.org/snaptoken/kilo>,
- * it'll be worth your time.
- *
- * This is the Vine source code, feel free to contribute on
- * <https://github.com/ElisStaaf/vine>. Or you can just enjoy
- * the editor, I won't judge! And with that, enjoy!
- *
- * Vine was made by Elis Staaf and released under the
- * Apache-2.0-license (but the original kilo is licensed
- * under the BSD-clause-2-license, so you also have to
- * follow that license for the original, unmodified
- * parts of the source code). Enjoy!
- */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * VINE EDITOR                                                               *
+ *                                                                           *
+ * Vine is a fork of the modified version of "Kilo" by Snaptoken,            *
+ * which is licensed under the BSD-Clause-2 License, while all               *
+ * of the modified pieces of code are released Apache License 2.0.           *
+ * Please abide to the fitting licenses under the fitting                    *
+ * circumstances.                                                            *
+ *                                                                           *
+ * Thank you Salvatore Sanfilippo (antirez on github.com) for                *
+ * making the original "Kilo" editor & thank you Paige Ruten                 *
+ * (paigeruten on github.com, but the project I forked is on her             *
+ * "tutorial account"; snaptoken) for making the slightly modified           *
+ * version. Speaking about Snaptoken, she has a really good tutorial         *
+ * on Kilo, which I followed to make this editor, check it out on            *
+ * <https://viewsourcecode.org/snaptoken/kilo>,                              *
+ * it'll be worth your time.                                                 *
+ *                                                                           *
+ * This is the Vine source code, feel free to contribute on                  *
+ * <https://github.com/ElisStaaf/vine>. Or you can just enjoy                *
+ * the editor, I won't judge! And with that, enjoy!                          *
+ *                                                                           *
+ * Vine was made by Elis Staaf and released under the                        *
+ * Apache-2.0-license (but the original kilo is licensed                     *
+ * under the BSD-clause-2-license, so you also have to                       *
+ * follow that license for the original, unmodified                          *
+ * parts of the source code). Enjoy!                                         *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #define _DEFAULT_SOURCE
 #define _BSD_SOURCE
