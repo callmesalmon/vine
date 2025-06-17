@@ -4,7 +4,7 @@ Vine Editor
 > [!WARNING]
 > This project is basically abandoned, I might update someday,
 > but I'm working on another text editor called "OpenVim", see
-> OpenVim [here](https://github.com/ElisStaaf/openvim).
+> OpenVim [here](https://github.com/callmesalmon/openvim).
 
 Vine is a fast and intuitive terminal-based text editor based on the modified "kilo-src"
 (https://github.com/snaptoken/kilo-src)  editor made by Paige Ruten, which is in turn based
@@ -15,7 +15,7 @@ the C standard library so that's good, i guess!
 
 **DISCLAIMER**: This is not a UTF-8 text editor, and I have no idea how to implement it. Sue me.
 
-[![VINE EDITOR](https://github.com/ElisStaaf/vine/raw/main/vineimg.png)](https://github.com/ElisStaaf/vine)
+[![VINE EDITOR](https://github.com/callmesalmon/vine/raw/main/vineimg.png)](https://github.com/callmesalmon/vine)
 
 Requirements
 ------------
@@ -28,7 +28,7 @@ Install
 -------
 To install, firstly clone the repo:
 ```sh
-git clone https://github.com/ElisStaaf/vine ~/vine
+git clone https://github.com/callmesalmon/vine ~/vine
 ```
 
 After that, you'd want to use ``cmake`` to initialize an executable:
