@@ -747,7 +747,7 @@ void editorOpen(char *filename) {
 
     FILE *fp = fopen(filename, "r");
     if (!fp) {
-        perror("[ERROR]: The requested file could not be opened.");
+        perror("[ERROR] The requested file could not be opened.");
         return;
     }
 
@@ -793,7 +793,7 @@ void editorSave() {
     }
 
     free(buf);
-    editorSetStatusMessage("[ERROR]: Can't save! I/O error: %s", strerror(errno));
+    editorSetStatusMessage("[ERROR] Can't save! I/O error: %s", strerror(errno));
 }
 
 void editorFindCallback(char *query, int key) {
@@ -1144,7 +1144,7 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('q'):
         if (E.dirty && quit_times > 0) {
-            editorSetStatusMessage("[WARNING]: File has unsaved changes. "
+            editorSetStatusMessage("[WARNING] File has unsaved changes. "
                                    "Press Ctrl-Q %d more times to quit.", quit_times);
             quit_times--;
             return;
