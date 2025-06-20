@@ -8,6 +8,20 @@ version has a *lot* of improvements. For example more syntax highlighting and ev
 files (this might just be my opinion, but a much better colourscheme as well). It also runs on 
 the C standard library so that's good, i guess!
 
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+C                                1            176            226            884
+Markdown                         1              7              0             43
+CMake                            1              3              0             11
+-------------------------------------------------------------------------------
+SUM:                             3            186            226            938
+-------------------------------------------------------------------------------
+Program used: "cloc"
+Count may be outdated.
+```
+
 **DISCLAIMER**: This is not a UTF-8 text editor, and I have no idea how to implement it. Sue me.
 
 [![VINE EDITOR](https://github.com/callmesalmon/vine/raw/main/vineimg.png)](https://github.com/callmesalmon/vine)
