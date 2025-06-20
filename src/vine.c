@@ -182,7 +182,9 @@ struct editorTheme T = {
  * comments and numbers.
  *
  * The characters for single and multi line comments must be exactly two
- * and must be provided as well (see the C language example).
+ * and must be provided as well (see the C language for example).
+ *
+ * The default syntax highlighted languages are: C, Python, Go, Rust
  */
 
 char *C_HL_extensions[] = { ".c", ".h", ".cpp", ".hpp",
