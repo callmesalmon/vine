@@ -1,11 +1,6 @@
 Vine Editor
 ===========
 
-> [!WARNING]
-> This project is basically abandoned, I might update someday,
-> but I'm working on another text editor called "OpenVim", see
-> OpenVim [here](https://github.com/callmesalmon/openvim).
-
 Vine is a fast and intuitive terminal-based text editor based on the modified "kilo-src"
 (https://github.com/snaptoken/kilo-src)  editor made by Paige Ruten, which is in turn based
 on Salvatore Sanfilippo's "kilo" (https://github.com/antirez/kilo). But this
