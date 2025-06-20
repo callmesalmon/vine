@@ -33,10 +33,10 @@
  * it'll be worth your time.                                                 *
  *                                                                           *
  * This is the Vine source code, feel free to contribute on                  *
- * <https://github.com/ElisStaaf/vine>. Or you can just enjoy                *
+ * <https://github.com/callmesalmon/vine>. Or you can just enjoy             *
  * the editor, I won't judge! And with that, enjoy!                          *
  *                                                                           *
- * Vine was made by Elis Staaf and released under the                        *
+ * Vine was made by Salmon and released under the                            *
  * Apache-2.0-license (but the original kilo is licensed                     *
  * under the BSD-clause-2-license, so you also have to                       *
  * follow that license for the original, unmodified                          *
