@@ -211,9 +211,9 @@ char *GO_HL_keywords[] = {
     "if", "else", "switch", "case", "func", "then", "for", "var", "type", "interface", "const", "range",
     "return", "struct", "default", "iota", "nil", "package", "import", "map", "break", "continue",
 
-    "int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64",
-    "float32", "float64", "byte", "rune", "bool", "string", "complex64", "complex128",
-    "any", "error", "comparable", NULL
+    "int|", "int8|", "int16|", "int32|", "int64|", "uint|", "uint8|", "uint16|", "uint32|", "uint64|",
+    "float32|", "float64|", "byte|", "rune|", "bool|", "string|", "complex64|", "complex128|",
+    "any|", "error|", "comparable|", NULL
 };
 
 char *PY_HL_extensions[] = { ".py", "pyi", ".xpy", "pyx",
