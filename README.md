@@ -26,6 +26,10 @@ Count may be outdated.
 
 [![VINE EDITOR](https://github.com/callmesalmon/vine/raw/main/vineimg.png)](https://github.com/callmesalmon/vine)
 
+**WARNING**: This image is basically 1000-years old and taken on WSL as that's what I used at the time. It might
+not accurately reflect the current state of the text editor at all, actually. But visuals is what sells for the
+stupid lizard brain.
+
 Requirements
 ------------
 * <https://gcc.gnu.org/install>
