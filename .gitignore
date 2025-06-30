@@ -52,8 +52,8 @@ Mkfile.old
 dkms.conf
 
 # CMake compilation results
-CMake*
-cmake*
-Makefile
-install_manifest.txt
-!CMakeLists.txt
+#CMake*
+#cmake*
+#Makefile
+#install_manifest.txt
+#!CMakeLists.txt
