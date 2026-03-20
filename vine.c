@@ -59,6 +59,7 @@
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
+#include <pwd.h>
 
 #define VINE_VERSION "NET/1"
 #define VINE_LINE_NUMBER_PADDING 4
@@ -1218,10 +1219,10 @@ void editorProcessKeypress() {
 
 /* ==================== Init ==================== */
 
-void loadConfig() {
-    FILE *file = fopen(strcat(getenv("HOME"), ".vinerc"), "r");
+int loadConfig() {
+    FILE *file = fopen(strcat(getpwuid(getuid())->pw_dir, "/.vinerc"), "r");
     if (!file) {
-        return;
+        return -1;
     }
 
     char line[256];
@@ -1244,6 +1245,8 @@ void loadConfig() {
     }
 
     fclose(file);
+
+    return 0;
 }
 
 void initEditor() {
@@ -1276,6 +1279,11 @@ int main(int argc, char *argv[]) {
 
     editorSetStatusMessage(
         "HELP: Ctrl-S = Save | Ctrl-Q = Quit | Ctrl-F = Find | Ctrl-D = Delete line");
+
+
+    if (loadConfig() == -1) {
+        editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
+    }
 
     while (1) {
         editorRefreshScreen();
