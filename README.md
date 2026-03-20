@@ -41,10 +41,9 @@ To install, firstly clone the repo:
 git clone https://github.com/callmesalmon/vine ~/vine
 ```
 
-After that, you'd want to use ``cmake`` to initialize an executable:
+After that, you'd want to use ``make`` to initialize an executable:
 ```sh
-cmake .
-sudo make
+make # or ``sudo make install`` for installation to /usr/local/bin
 ```
 
 Usage
