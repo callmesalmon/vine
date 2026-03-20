@@ -17,7 +17,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * VINE EDITOR                                                               *
  *                                                                           *
- * Vine is a fork of the modified version of "Kilo" by Snaptoken,            *
+ * VINE is a fork of the modified version of "Kilo" by Snaptoken,            *
  * which is licensed under the BSD-Clause-2 License, while all               *
  * of the modified pieces of code are released Apache License 2.0.           *
  * Please abide to the fitting licenses under the fitting                    *
@@ -32,7 +32,7 @@
  * <https://viewsourcecode.org/snaptoken/kilo>,                              *
  * it'll be worth your time.                                                 *
  *                                                                           *
- * This is the Vine source code, feel free to contribute on                  *
+ * This is the VINE source code, feel free to contribute on                  *
  * <https://github.com/callmesalmon/vine>. Or you can just enjoy             *
  * the editor, I won't judge! And with that, enjoy!                          *
  *                                                                           *
