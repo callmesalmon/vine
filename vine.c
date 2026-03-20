@@ -1176,6 +1176,10 @@ void editorProcessKeypress() {
         editorFind();
         break;
 
+    case CTRL_KEY('o'):
+        editorOpen(editorPrompt("Open: %s", NULL));
+        break;
+
     case BACKSPACE:
     case CTRL_KEY('x'):
         if (c == CTRL_KEY('x')) editorMoveCursor(ARROW_RIGHT);

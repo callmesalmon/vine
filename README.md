@@ -61,4 +61,5 @@ Ctrl+X - Delete next char
 Ctrl+D - Delete current line
 Ctrl+J - Start of line
 Ctrl+K - End of line
+Ctrl+O - Open new file
 ```
