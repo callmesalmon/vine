@@ -1224,7 +1224,16 @@ void editorProcessKeypress() {
 /* ==================== Init ==================== */
 
 int loadConfig() {
-    FILE *file = fopen(strcat(getpwuid(getuid())->pw_dir, "/.vinerc"), "r");
+    char *config_file = strcat(getpwuid(getuid())->pw_dir, "/.vinerc");
+
+    // If we don't do this, the text editor will throw an error
+    // just because ~/.vinerc doesn't exist. The problem is all other
+    // cases where opening ~/.vinerc returns NULL
+    if (access(config_file, F_OK) != 0) {
+        return 0;
+    }
+
+    FILE *file = fopen(config_file, "r");
     if (!file) {
         return -1;
     }
