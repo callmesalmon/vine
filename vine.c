@@ -1180,8 +1180,11 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('o'): {
         char *fname = editorPrompt("Open: %s", NULL);
-        initEditor();
+
+        initEditor(); // We need to re-init as to get a clean slate
+
         editorOpen(fname);
+        editorSetStatusMessage("Successfully opened file \"%s\".", fname);
 
         break;
     }
