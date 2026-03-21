@@ -148,6 +148,8 @@ struct editorConfig {
 
 struct editorConfig E;
 
+void initEditor(); // <--- Configures "E"
+
 /* ==================== Themes ======================
  *
  * In order add a new theme, define a new (const) struct out of the struct
@@ -746,7 +748,7 @@ void editorOpen(char *filename) {
 
     editorSelectSyntaxHighlight();
 
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = fopen(E.filename, "r");
     if (!fp) {
         perror("[ERROR] The requested file could not be opened.");
         return;
@@ -1176,9 +1178,13 @@ void editorProcessKeypress() {
         editorFind();
         break;
 
-    case CTRL_KEY('o'):
-        editorOpen(editorPrompt("Open: %s", NULL));
+    case CTRL_KEY('o'): {
+        char *fname = editorPrompt("Open: %s", NULL);
+        initEditor();
+        editorOpen(fname);
+
         break;
+    }
 
     case BACKSPACE:
     case CTRL_KEY('x'):
