@@ -178,6 +178,11 @@ const struct editorTheme sonokai = {
     PURPLE, BLUE, WHITE,
 };
 
+const struct editorTheme kilo = {
+    CYAN, YELLOW, GREEN, PURPLE,
+    RED, BLUE, WHITE
+};
+
 // This is what the vim default looks like on my machine
 const struct editorTheme vimmy = {
     BRIGHT_CYAN, BRIGHT_YELLOW, BRIGHT_GREEN, BRIGHT_PURPLE,
@@ -1298,6 +1303,7 @@ int loadConfig() {
             } else if (strcmp(key, "colorscheme") == 0) {
                 if (!strcmp(value, "\"sonokai\"")) setTheme(sonokai);
                 else if (!strcmp(value, "\"vimmy\"")) setTheme(vimmy);
+                else if (!strcmp(value, "\"kilo\"")) setTheme(kilo);
             }
         }
     }
