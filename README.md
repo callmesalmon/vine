@@ -25,7 +25,8 @@ Count may be outdated.
 
 **DISCLAIMER**: This is not a UTF-8 text editor, and I have no idea how to implement it. Sue me.
 
-[![VINE EDITOR](https://github.com/callmesalmon/vine/raw/main/vineimg.png)](https://github.com/callmesalmon/vine)
+[![VINE EDITOR](https://github.com/callmesalmon/vine/raw/main/vineimg.png)](https://github.com/callmesalmon/vine)  
+VINE editing its source code with the "sonokai" colorscheme
 
 Requirements
 ------------
