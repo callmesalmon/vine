@@ -1266,9 +1266,9 @@ int loadConfig() {
             } else if (strcmp(key, "quit_times") == 0) {
                 E.quit_times = atoi(value);
             } else if (strcmp(key, "show_empty_lines") == 0) {
-                show_empty_lines = atoi(value);
+                if (!strcmp(value, "true"))       show_empty_lines = 1;
+                else if (!strcmp(value, "false")) show_empty_lines = 0;
             }
-
         }
     }
 

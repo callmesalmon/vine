@@ -68,7 +68,7 @@ Ctrl+O - Open new file
 Configuration options
 ---------------------
 ```
-tab_stop <int>         - Tab size
-quit_times <int>       - Amount of times to press <C-Q> until it actully quits
-show_empty_lines <1/0> - Whether or not to show tildes on empty lines
+tab_stop <int>          - Tab size
+quit_times <int>        - Amount of times to press <C-Q> until it actully quits
+show_empty_lines <bool> - Whether or not to show tildes on empty lines
 ```
