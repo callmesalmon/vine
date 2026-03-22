@@ -1261,7 +1261,7 @@ int loadConfig() {
             key[strcspn(key, "\r\n")]     = 0;
             value[strcspn(value, "\r\n")] = 0;
 
-            if (strcmp(key, "tab_stop") == 0) {
+            if (strcmp(key, "tab_size") == 0) {
                 E.tab_stop = atoi(value);
             } else if (strcmp(key, "quit_times") == 0) {
                 E.quit_times = atoi(value);
