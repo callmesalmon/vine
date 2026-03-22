@@ -918,6 +918,9 @@ void editorScroll() {
     }
 }
 
+// vinerc option
+static int show_empty_lines = 1;
+
 void editorDrawRows(struct abuf *ab) {
     int y;
     /* TODO: Add more lines with useful
@@ -931,14 +934,14 @@ void editorDrawRows(struct abuf *ab) {
                 "Very INtuitive Editor -- Version %s", VINE_VERSION);
                 if (welcomelen > E.screencols) welcomelen = E.screencols;
                     int padding = (E.screencols - welcomelen) / 2;
-                if (padding) {
+                if (padding && show_empty_lines) {
                   abAppend(ab, "~", 1);
           padding--;
         }
         while (padding--) abAppend(ab, " ", 1);
         abAppend(ab, welcome, welcomelen);
       } else {
-        abAppend(ab, "~", 1); 
+        if (show_empty_lines) abAppend(ab, "~", 1); 
       }
       } else {
       char linenum[32];
@@ -1262,7 +1265,10 @@ int loadConfig() {
                 E.tab_stop = atoi(value);
             } else if (strcmp(key, "quit_times") == 0) {
                 E.quit_times = atoi(value);
+            } else if (strcmp(key, "show_empty_lines") == 0) {
+                show_empty_lines = atoi(value);
             }
+
         }
     }
 
