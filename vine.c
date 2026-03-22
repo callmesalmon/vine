@@ -61,7 +61,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-#define VINE_VERSION "NET/1"
+#define VINE_VERSION "1"
 #define VINE_LINE_NUMBER_PADDING 4
 #define VINE_QUIT_TIMES 3
 
@@ -928,7 +928,7 @@ void editorDrawRows(struct abuf *ab) {
             if (E.numrows == 0 && y == E.screenrows / 3) {
                 char welcome[128];
                 int welcomelen = snprintf(welcome, sizeof(welcome),
-                "Vine editor -- version %s", VINE_VERSION);
+                "Very INtuitive Editor -- Version %s", VINE_VERSION);
                 if (welcomelen > E.screencols) welcomelen = E.screencols;
                     int padding = (E.screencols - welcomelen) / 2;
                 if (padding) {
