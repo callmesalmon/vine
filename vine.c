@@ -155,18 +155,45 @@ void initEditor(); // <--- Configures "E"
  * In order add a new theme, define a new (const) struct out of the struct
  * "editorTheme", then add all of the colour values into it in the form of a
  * FG-ANSI colour. Then, just simply change the values of the "T" struct to
- * your themes value (see "sonokai" theme example below).
+ * your themes value
  */
 
+#define RED 31
+#define BRIGHT_RED 91
+#define GREEN 32
+#define BRIGHT_GREEN 92
+#define YELLOW 33
+#define BRIGHT_YELLOW 93
+#define BLUE 34
+#define BRIGHT_BLUE 94
+#define PURPLE 35
+#define BRIGHT_PURPLE 95
+#define CYAN 36
+#define BRIGHT_CYAN 96
+#define WHITE 37
+#define GREY 90
+
 const struct editorTheme sonokai = {
-    90, 31, 32, 92,
-    35, 34, 37,
+    GREY, RED, GREEN, BRIGHT_GREEN,
+    PURPLE, BLUE, WHITE,
 };
 
-struct editorTheme T = {
-    sonokai.hl_com, sonokai.hl_kw1, sonokai.hl_kw2, sonokai.hl_str,
-    sonokai.hl_num, sonokai.hl_find, sonokai.hl_nil
+// This is what the vim default looks like on my machine
+const struct editorTheme vimmy = {
+    BRIGHT_CYAN, BRIGHT_YELLOW, BRIGHT_GREEN, BRIGHT_PURPLE,
+    BRIGHT_PURPLE, BLUE, WHITE,
 };
+
+struct editorTheme T;
+void setTheme(const struct editorTheme theme) {
+    T.hl_com  = theme.hl_com;
+    T.hl_kw1  = theme.hl_kw1;
+    T.hl_kw2  = theme.hl_kw2;
+    T.hl_str  = theme.hl_str;
+    T.hl_num  = theme.hl_num;
+    T.hl_find = theme.hl_find;
+    T.hl_nil  = theme.hl_nil;
+}
 
 /* ==================== Syntax Highlighting ====================
  *
@@ -1268,6 +1295,9 @@ int loadConfig() {
             } else if (strcmp(key, "show_empty_lines") == 0) {
                 if (!strcmp(value, "true"))       show_empty_lines = 1;
                 else if (!strcmp(value, "false")) show_empty_lines = 0;
+            } else if (strcmp(key, "colorscheme") == 0) {
+                if (!strcmp(value, "\"sonokai\"")) setTheme(sonokai);
+                else if (!strcmp(value, "\"vimmy\"")) setTheme(vimmy);
             }
         }
     }
@@ -1300,6 +1330,8 @@ void initEditor() {
 int main(int argc, char *argv[]) {
     enableRawMode();
     initEditor();
+
+    setTheme(sonokai); // default theme
 
     if (argc >= 2) {
         editorOpen(argv[1]);
