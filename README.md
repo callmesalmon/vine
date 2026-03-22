@@ -74,3 +74,10 @@ quit_times <int>        - Amount of times to press <C-Q> until it actully quits
 show_empty_lines <bool> - Whether or not to show tildes on empty lines
 colorscheme <str>       - Set colorscheme
 ```
+Sample:
+```python
+tab_size=2
+quit_times=2
+show_empty_lines=false
+colorscheme="kilo"
+```
