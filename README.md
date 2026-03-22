@@ -51,6 +51,7 @@ Usage
 ```sh
 vine <filename>
 ```
+
 Keybinds
 --------
 ```
@@ -62,4 +63,12 @@ Ctrl+D - Delete current line
 Ctrl+J - Start of line
 Ctrl+K - End of line
 Ctrl+O - Open new file
+```
+
+Configuration options
+---------------------
+```
+tab_stop <int>         - Tab size
+quit_times <int>       - Amount of times to press <C-Q> until it actully quits
+show_empty_lines <1/0> - Whether or not to show tildes on empty lines
 ```
