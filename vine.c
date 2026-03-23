@@ -1378,14 +1378,14 @@ void initEditor() {
 }
 
 int main(int argc, char *argv[]) {
+    setTheme(sonokai); // default theme
+
     if (loadConfig() == -1) {
         editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
     }
 
     enableRawMode();
     initEditor();
-
-    setTheme(sonokai); // default theme
 
     if (argc >= 2) {
         editorOpen(argv[1]);
