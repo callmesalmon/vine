@@ -1346,7 +1346,7 @@ int loadConfig() {
             else if (!strcmp(value, "\"vimmy\"")) setTheme(vimmy);
             else if (!strcmp(value, "\"kilo\"")) setTheme(kilo);
             else handleConfigError(key);
-        } else {handleConfigError("(unknown opt)"); }
+        } else handleConfigError("(unknown opt)");
     }
 
     fclose(file);
