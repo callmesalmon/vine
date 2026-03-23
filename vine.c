@@ -1170,6 +1170,16 @@ void editorMoveCursor(int key) {
     }
 }
 
+// is_digit but for an entire string
+int is_number(char *str) {
+    for (size_t i = 0; i < strlen(str); i++) {
+        if (!isdigit(str[i]))
+            return 0;
+    }
+
+    return 1;
+}
+
 void editorProcessKeypress() {
     static int quit_times = VINE_QUIT_TIMES;
 
@@ -1216,11 +1226,9 @@ void editorProcessKeypress() {
     case CTRL_KEY('g'): {
         char *line  = editorPrompt("Goto: %s", NULL);
 
-        for (size_t i = 0; i < strlen(line); i++) {
-            if (!isdigit(line[i])) {
-                editorSetStatusMessage("Not a number!");
-                return;
-            }
+        if (!is_number(line)) {
+            editorSetStatusMessage("Not a number!");
+            return;
         }
         
         if (atoi(line) > E.numrows) E.cy = E.numrows;
@@ -1284,6 +1292,12 @@ void editorProcessKeypress() {
 
 /* ==================== Init ==================== */
 
+void handleConfigError(char *opt) {
+    printf("In ~/.vinerc:\n");
+    printf("\t%s: Syntax error!\n", opt);
+    getchar();
+}
+
 int loadConfig() {
     char *config_file = strcat(getpwuid(getuid())->pw_dir, "/.vinerc");
 
@@ -1302,27 +1316,37 @@ int loadConfig() {
     char line[256];
     while (fgets(line, sizeof(line), file)) {
         char *equals = strchr(line, '=');
-        if (equals) {
-            *equals     = '\0'; /* Null-terminate at '=' to split key */
-            char *key   = line;
-            char *value = equals + 1;
+        if (!equals) continue;
 
-            key[strcspn(key, "\r\n")]     = 0;
-            value[strcspn(value, "\r\n")] = 0;
+        *equals     = '\0'; /* Null-terminate at '=' to split key */
+        char *key   = line;
+        char *value = equals + 1;
 
-            if (strcmp(key, "tab_size") == 0) {
-                E.tab_stop = atoi(value);
-            } else if (strcmp(key, "quit_times") == 0) {
-                E.quit_times = atoi(value);
-            } else if (strcmp(key, "show_empty_lines") == 0) {
-                if (!strcmp(value, "true"))       show_empty_lines = 1;
-                else if (!strcmp(value, "false")) show_empty_lines = 0;
-            } else if (strcmp(key, "colorscheme") == 0) {
-                if (!strcmp(value, "\"sonokai\"")) setTheme(sonokai);
-                else if (!strcmp(value, "\"vimmy\"")) setTheme(vimmy);
-                else if (!strcmp(value, "\"kilo\"")) setTheme(kilo);
+        key[strcspn(key, "\r\n")]     = 0;
+        value[strcspn(value, "\r\n")] = 0;
+
+        if (strcmp(key, "tab_size") == 0) {
+            if (!is_number(value)) {
+                handleConfigError(key);
+                break;
             }
-        }
+            E.tab_stop = atoi(value);
+        } else if (strcmp(key, "quit_times") == 0) {
+            if (!is_number(value)) {
+                handleConfigError(key);
+                break;
+            }
+            E.quit_times = atoi(value);
+        } else if (strcmp(key, "show_empty_lines") == 0) {
+            if (!strcmp(value, "true"))       show_empty_lines = 1;
+            else if (!strcmp(value, "false")) show_empty_lines = 0;
+            else handleConfigError(key);
+        } else if (strcmp(key, "colorscheme") == 0) {
+            if (!strcmp(value, "\"sonokai\"")) setTheme(sonokai);
+            else if (!strcmp(value, "\"vimmy\"")) setTheme(vimmy);
+            else if (!strcmp(value, "\"kilo\"")) setTheme(kilo);
+            else handleConfigError(key);
+        } else {handleConfigError("(unknown opt)"); }
     }
 
     fclose(file);
@@ -1351,6 +1375,10 @@ void initEditor() {
 }
 
 int main(int argc, char *argv[]) {
+    if (loadConfig() == -1) {
+        editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
+    }
+
     enableRawMode();
     initEditor();
 
@@ -1362,11 +1390,6 @@ int main(int argc, char *argv[]) {
 
     editorSetStatusMessage(
         "HELP: Ctrl-S = Save | Ctrl-Q = Quit | Ctrl-F = Find | Ctrl-D = Delete line");
-
-
-    if (loadConfig() == -1) {
-        editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
-    }
 
     while (1) {
         editorRefreshScreen();
