@@ -65,6 +65,7 @@ Ctrl+J - Start of line
 Ctrl+K - End of line
 Ctrl+O - Open new file
 Ctrl+G - Goto line
+Ctrl+B - Run bash command
 ```
 
 Configuration options

@@ -1222,6 +1222,14 @@ void editorProcessKeypress() {
         editorFind();
         break;
 
+    case CTRL_KEY('b'): {
+        char *cmd  = editorPrompt("CMD: %s", NULL);
+        int stat   = system(cmd);
+
+        editorSetStatusMessage("%s", (!stat) ? "Success!" : "Failure...");
+        break;
+    }
+
     case CTRL_KEY('g'): {
         char *line  = editorPrompt("Goto: %s", NULL);
 
