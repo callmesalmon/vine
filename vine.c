@@ -1180,6 +1180,8 @@ int is_number(char *str) {
     return 1;
 }
 
+static int tab_expand = 0;
+
 void editorProcessKeypress() {
     static int quit_times = VINE_QUIT_TIMES;
 
@@ -1188,6 +1190,18 @@ void editorProcessKeypress() {
     switch (c) {
     case '\r':
         editorInsertNewline();
+        break;
+
+    case '\t':
+        if (!tab_expand) {
+            editorInsertChar('\t');
+            break;
+        }
+
+        editorSetStatusMessage("%d", E.tab_stop);
+
+        for (int i = 0; i < E.tab_stop; i++)
+            editorInsertChar(' ');
         break;
 
     case CTRL_KEY('q'):
@@ -1340,6 +1354,10 @@ int loadConfig() {
         } else if (strcmp(key, "show_empty_lines") == 0) {
             if (!strcmp(value, "true"))       show_empty_lines = 1;
             else if (!strcmp(value, "false")) show_empty_lines = 0;
+            else handleConfigError(key);
+        } else if (strcmp(key, "expand_tab") == 0) {
+            if (!strcmp(value, "true"))       tab_expand = 1;
+            else if (!strcmp(value, "false")) tab_expand = 0;
             else handleConfigError(key);
         } else if (strcmp(key, "colorscheme") == 0) {
             if (!strcmp(value, "\"sonokai\"")) setTheme(sonokai);

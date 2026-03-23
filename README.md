@@ -73,6 +73,7 @@ Configuration options
 tab_size <int>          - Tab size
 quit_times <int>        - Amount of times to press <C-Q> until it actully quits
 show_empty_lines <bool> - Whether or not to show tildes on empty lines
+expand_tab <bool>       - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>       - Set colorscheme
 ```
 Sample:
@@ -80,5 +81,6 @@ Sample:
 tab_size=2
 quit_times=2
 show_empty_lines=false
+expand_tab=true
 colorscheme="kilo"
 ```
