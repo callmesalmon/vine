@@ -64,6 +64,7 @@ Ctrl+D - Delete current line
 Ctrl+J - Start of line
 Ctrl+K - End of line
 Ctrl+O - Open new file
+Ctrl+G - Goto line
 ```
 
 Configuration options

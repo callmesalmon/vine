@@ -1213,6 +1213,23 @@ void editorProcessKeypress() {
         editorFind();
         break;
 
+    case CTRL_KEY('g'): {
+        char *line  = editorPrompt("Goto: %s", NULL);
+
+        for (size_t i = 0; i < strlen(line); i++) {
+            if (!isdigit(line[i])) {
+                editorSetStatusMessage("Not a number!");
+                return;
+            }
+        }
+        
+        if (atoi(line) > E.numrows) E.cy = E.numrows;
+        else if (atoi(line) < 1) E.cy = 0;
+        else E.cy = atoi(line) - 1;
+
+        break;
+    }
+
     case CTRL_KEY('o'): {
         char *fname = editorPrompt("Open: %s", NULL);
 
