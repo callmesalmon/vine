@@ -1285,6 +1285,8 @@ void editorProcessKeypress() {
             goto x_jmp;
         }
 
+        if (!auto_pair) goto x_jmp;
+
         char local_opening_qb = E.row[E.cy].chars[E.cx - 1];
         char local_closing_qb = E.row[E.cy].chars[E.cx];
         if (is_opening_pair(local_opening_qb) && c == BACKSPACE) {
