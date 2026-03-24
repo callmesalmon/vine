@@ -1137,6 +1137,25 @@ void editorMoveCursor(int key) {
     }
 }
 
+static char *opening_quote_brace = "([{\"'";
+static char *closing_quote_brace = ")]}\"'";
+
+int is_opening_quote_brace(char c) {
+    for (size_t i = 0; i < strlen(opening_quote_brace); i++) {
+        if (c == opening_quote_brace[i])
+            return 1;
+    }
+    return 0;
+}
+
+int is_closing_quote_brace(char c) {
+    for (size_t i = 0; i < strlen(closing_quote_brace); i++) {
+        if (c == closing_quote_brace[i])
+            return 1;
+    }
+    return 0;
+}
+
 void editorMatchQuoteBrace(char first) {
     switch (first) {
         case '(':
@@ -1261,8 +1280,24 @@ void editorProcessKeypress() {
 
     case BACKSPACE:
     case CTRL_KEY('x'):
-        if (c == CTRL_KEY('x')) editorMoveCursor(ARROW_RIGHT);
+        if (c == CTRL_KEY('x')) {
+            editorMoveCursor(ARROW_RIGHT);
+            goto x_jmp;
+        }
+
+        char local_opening_qb = E.row[E.cy].chars[E.cx - 1];
+        char local_closing_qb = E.row[E.cy].chars[E.cx];
+        if (is_opening_quote_brace(local_opening_qb) && c == BACKSPACE) {
+            if (is_closing_quote_brace(local_closing_qb)) {
+                editorMoveCursor(ARROW_RIGHT);
+                editorDelChar();
+            }
+        }
+
+        x_jmp:
+
         editorDelChar();
+
         break;
 
     case PAGE_UP:
