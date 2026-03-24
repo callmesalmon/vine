@@ -1137,6 +1137,27 @@ void editorMoveCursor(int key) {
     }
 }
 
+void editorMatchQuoteBrace(char first) {
+    switch (first) {
+        case '(':
+            editorInsertChar(')');
+            break;
+        case '[':
+            editorInsertChar(']');
+            break;
+        case '{':
+            editorInsertChar('}');
+            break;
+        case '"':
+            editorInsertChar('"');
+            break;
+        case '\'':
+            editorInsertChar('\'');
+            break;
+    }
+    E.cx--;
+}
+
 // is_digit but for an entire string
 int is_number(char *str) {
     for (size_t i = 0; i < strlen(str); i++) {
@@ -1147,7 +1168,9 @@ int is_number(char *str) {
     return 1;
 }
 
+// config opts
 static int tab_expand = 0;
+static int match_quote_brace = 0;
 
 void editorProcessKeypress() {
     static int quit_times = VINE_QUIT_TIMES;
@@ -1265,6 +1288,18 @@ void editorProcessKeypress() {
         editorMoveCursor(c);
         break;
 
+    case '(':
+    case '[':
+    case '{':
+    case '"':
+    case '\'':
+        editorInsertChar(c);
+
+        if (match_quote_brace)
+            editorMatchQuoteBrace(c);
+
+        break;
+
     case CTRL_KEY('l'):
     case '\x1b':
         break;
@@ -1363,6 +1398,12 @@ int loadConfig() {
                 setTheme(kilo);
             else
                 handleConfigError(key);
+        } else if (strcmp(key, "match_quote_brace") == 0) {
+            if (str_to_bool(value) == -1) {
+                handleConfigError(key);
+                break;
+            }
+            match_quote_brace = str_to_bool(value);
         } else handleConfigError("(unknown opt)");
     }
 
@@ -1409,7 +1450,6 @@ int main(int argc, char *argv[]) {
 
     editorSetStatusMessage(
         "HELP: Ctrl-S = Save | Ctrl-Q = Quit | Ctrl-F = Find | Ctrl-D = Delete line");
-
     while (1) {
         editorRefreshScreen();
         editorProcessKeypress();
