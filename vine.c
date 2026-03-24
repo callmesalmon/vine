@@ -1414,6 +1414,14 @@ int loadConfig() {
 
 /* ==================== Init ==================== */
 
+// something like initEditor for config defaults...
+void initDefaults() {
+    setTheme(sonokai); // default theme
+
+    E.tab_stop       = 4;
+    E.quit_times     = 3;
+}
+
 void initEditor() {
     E.cx             = 0;
     E.cy             = 0;
@@ -1427,15 +1435,13 @@ void initEditor() {
     E.statusmsg[0]   = '\0';
     E.statusmsg_time = 0;
     E.syntax         = NULL;
-    E.tab_stop       = 4;
-    E.quit_times     = 3;
 
     if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
     E.screenrows -= 2;
 }
 
 int main(int argc, char *argv[]) {
-    setTheme(sonokai); // default theme
+    initDefaults();
 
     if (loadConfig() == -1) {
         editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
