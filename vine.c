@@ -210,20 +210,19 @@ void setTheme(const struct editorTheme theme) {
 char *C_HL_extensions[] = { ".c", ".h", ".cpp", ".hpp",
                             ".cc", ".hh", ".cxx", ".hxx", NULL };
 char *C_HL_keywords[] = {
-    "auto", "break", "case", "const", "continue", "default", "do", "else", "enum",  "extern",
-    "for", "goto", "if", "register", "return", "sizeof", "static",  "struct", "switch", 
-    "typedef", "union", "volatile", "while", "__asm__", "NULL", "alignas", "alignof",
-    "and", "and_eq", "asm", "bitand", "bitor", "class",  "compl", "constexpr",
-    "const_cast", "deltype", "delete", "dynamic_cast",  "explicit", "export", "false",
-    "friend", "inline", "mutable", "using", "namespace",  "new", "noexcept", "not",
-    "not_eq", "nullptr", "operator", "or", "or_eq",  "private", "protected", "public",
-    "reinterpret_cast", "static_assert", "static_cast", "template", "this",
-    "thread_local", "throw", "true", "try", "typeid", "typename", "virtual",
-    "xor", "xor_eq", "#define", "#include", "#if", "ifdef", "#ifndef",
-    "#endif", "#error", "#warning", "#pragma",
+    "break", "case", "continue", "default", "do", "else",  "for", "goto", "if", "return",
+    "sizeof", "switch",  "while", "__asm__", "NULL", "alignas", "alignof", "and", "and_eq", "asm",
+    "bitand", "bitor", "compl", "const_cast", "delete", "dynamic_cast", "export", "false",
+    "friend", "using", "new", "noexcept", "not", "not_eq", "nullptr", "operator", "or", "or_eq",
+    "reinterpret_cast", "static_assert", "static_cast", "this", "throw", "true", "try", "typeid", 
+    "xor", "xor_eq", "#define", "#include", "#if", "ifdef", "#ifndef", "#endif", "#error",
+    "#warning", "#pragma",
 
-    "int|", "long|", "double|", "float|", "char|", "unsigned|", "signed|",
-    "void|", "short|", "auto|", "bool|", NULL
+    "int|", "long|", "double|", "float|", "char|", "unsigned|", "signed|", "void|", "short|", "auto|",
+    "bool|", "size_t|", "enum|", "extern|", "auto|", "register|", "static|", "struct|", "typedef|",
+    "union|", "volatile|", "class|", "constexpr|", "explicit|", "inline|", "mutable|", "namespace|",
+    "private|", "protected|", "public|", "template|", "thread_local|", "typename|", "virtual|",
+    "const|", NULL
 };
 
 char *GO_HL_extensions[] = { ".go", NULL };
@@ -239,21 +238,18 @@ char *GO_HL_keywords[] = {
 char *PY_HL_extensions[] = { ".py", "pyi", ".xpy", "pyx",
                              ".pyw", ".ipynb", NULL };
 char *PY_HL_keywords[] = {
-    "and", "as", "assert", "break", "class", "continue", "def", "del", "elif",
-    "else", "except", "exec", "finally", "for", "from", "global", "if", "import",
-    "in", "is", "lambda", "not", "or", "pass", "print", "raise", "return", "try",
-    "while", "with", "yield", "async", "await", "nonlocal", "range", "xrange",
-    "reduce", "map", "filter", "all", "any", "sum", "dir", "abs", "breakpoint",
-    "compile", "delattr", "divmod", "format", "eval", "getattr", "hasattr",
-    "hash", "help", "id", "input", "isinstance", "issubclass", "len", "locals",
-    "max", "min", "next", "open", "pow", "repr", "reversed", "round", "setattr",
-    "slice", "sorted", "super", "vars", "zip", "__import__", "reload", "raw_input",
-    "execfile", "file", "cmp", "basestring",
+    "and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else", "except", "exec",
+    "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or", "pass", "print",
+    "raise", "return", "try", "while", "with", "yield", "async", "await", "nonlocal", "range", "xrange",
+    "reduce", "map", "filter", "all", "any", "sum", "dir", "abs", "breakpoint", "compile", "delattr",
+    "divmod", "format", "eval", "getattr", "hasattr", "hash", "help", "id", "input", "isinstance",
+    "issubclass", "len", "locals", "max", "min", "next", "open", "pow", "repr", "reversed", "round",
+    "setattr", "slice", "sorted", "super", "vars", "zip", "__import__", "reload", "raw_input", "execfile",
+    "file", "cmp", "basestring",
 
-    "buffer|", "bytearray|", "bytes|", "complex|", "float|", "frozenset|", "int|",
-    "list|", "long|", "None|", "set|", "str|", "chr|", "tuple|", "bool|", "False|",
-    "True|", "type|", "unicode|", "dict|", "ascii|", "bin|", "callable|",
-    "classmethod|", "enumerate|", "hex|", "oct|", "ord|", "iter|", "memoryview|",
+    "buffer|", "bytearray|", "bytes|", "complex|", "float|", "frozenset|", "int|", "list|", "long|", "None|",
+    "set|", "str|", "chr|", "tuple|", "bool|", "False|", "True|", "type|", "unicode|", "dict|", "ascii|",
+    "bin|", "callable|", "classmethod|", "enumerate|", "hex|", "oct|", "ord|", "iter|", "memoryview|",
     "object|", "property|", "staticmethod|", "unichr|", NULL
 };
 
