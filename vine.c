@@ -1279,6 +1279,15 @@ void editorProcessKeypress() {
 
 /* ==================== Config ==================== */
 
+void remove_spaces(char* s) {
+    char *d = s;
+    do {
+        while (*d == ' ') {
+            ++d;
+        }
+    } while ((*s++ = *d++));
+}
+
 void handleConfigError(char *opt) {
     printf("In ~/.vinerc:\n");
     printf("\t%s: Syntax error!\n", opt);
@@ -1312,6 +1321,9 @@ int loadConfig() {
         *equals     = '\0'; /* Null-terminate at '=' to split key */
         char *key   = line;
         char *value = equals + 1;
+
+        remove_spaces(key);
+        remove_spaces(value);
 
         key[strcspn(key, "\r\n")]     = 0;
         value[strcspn(value, "\r\n")] = 0;

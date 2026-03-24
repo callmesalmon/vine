@@ -53,9 +53,8 @@ Ctrl+B - Run bash command
 
 Configuration
 -------------
-The VINE configuration operates using a config file, ``~/.vinerc``, and has EXTREMELY
-strict syntax, for example you may NOT have spaces in assignment (e.g ``a = b`` will not
-work, but ``a=b`` will). Comments may be added, starting with ``"`` like in VimScript.
+The VINE configuration operates using a config file, ``~/.vinerc``.
+Comments may be added, starting with ``"`` like in VimScript.
 
 The following is a list of configuration options:
 ```
@@ -67,10 +66,14 @@ colorscheme <str>       - Set colorscheme
 ```
 
 Sample:
-```python
-tab_size=2
-quit_times=2
-show_empty_lines=false
-expand_tab=true
-colorscheme="kilo"
+```vim
+" Tab formatting
+tab_size = 2
+expand_tab = true
+
+quit_times = 2
+
+show_empty_lines = false
+
+colorscheme = "kilo"
 ```
