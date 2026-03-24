@@ -51,8 +51,13 @@ Ctrl+G - Goto line
 Ctrl+B - Run bash command
 ```
 
-Configuration options
----------------------
+Configuration
+-------------
+The VINE configuration operates using a config file, ``~/.vinerc``, and has EXTREMELY
+strict syntax, for example you may NOT have spaces in assignment (e.g ``a = b`` will not
+work, but ``a=b`` will). Comments may be added, starting with ``"`` like in VimScript.
+
+The following is a list of configuration options:
 ```
 tab_size <int>          - Tab size
 quit_times <int>        - Amount of times to press <C-Q> until it actully quits
@@ -60,6 +65,7 @@ show_empty_lines <bool> - Whether or not to show tildes on empty lines
 expand_tab <bool>       - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>       - Set colorscheme
 ```
+
 Sample:
 ```python
 tab_size=2

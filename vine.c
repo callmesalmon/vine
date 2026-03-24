@@ -1316,6 +1316,8 @@ int loadConfig() {
         key[strcspn(key, "\r\n")]     = 0;
         value[strcspn(value, "\r\n")] = 0;
 
+        if (key[0] == '\"') continue;
+
         if (strcmp(key, "tab_size") == 0) {
             if (!is_number(value)) {
                 handleConfigError(key);
