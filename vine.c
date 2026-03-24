@@ -1183,8 +1183,6 @@ void editorProcessKeypress() {
             break;
         }
 
-        editorSetStatusMessage("%d", E.tab_stop);
-
         for (int i = 0; i < E.tab_stop; i++)
             editorInsertChar(' ');
         break;
@@ -1305,6 +1303,10 @@ void handleConfigError(char *opt) {
     getchar();
 }
 
+#define str_to_bool(s)  \
+    (!(strcmp(s, "true")) ? 1 : \
+        !(strcmp(s, "false")) ? 0 : -1)
+
 int loadConfig() {
     char *config_file = strcat(getpwuid(getuid())->pw_dir, "/.vinerc");
 
@@ -1345,18 +1347,26 @@ int loadConfig() {
             }
             E.quit_times = atoi(value);
         } else if (strcmp(key, "show_empty_lines") == 0) {
-            if (!strcmp(value, "true"))       show_empty_lines = 1;
-            else if (!strcmp(value, "false")) show_empty_lines = 0;
-            else handleConfigError(key);
+            if (str_to_bool(value) == -1) {
+                handleConfigError(key);
+                break;
+            }
+            show_empty_lines = str_to_bool(value);
         } else if (strcmp(key, "expand_tab") == 0) {
-            if (!strcmp(value, "true"))       tab_expand = 1;
-            else if (!strcmp(value, "false")) tab_expand = 0;
-            else handleConfigError(key);
+            if (str_to_bool(value) == -1) {
+                handleConfigError(key);
+                break;
+            }
+            tab_expand = str_to_bool(value);
         } else if (strcmp(key, "colorscheme") == 0) {
-            if (!strcmp(value, "\"sonokai\"")) setTheme(sonokai);
-            else if (!strcmp(value, "\"vimmy\"")) setTheme(vimmy);
-            else if (!strcmp(value, "\"kilo\"")) setTheme(kilo);
-            else handleConfigError(key);
+            if (!strcmp(value, "\"sonokai\""))
+                setTheme(sonokai);
+            else if (!strcmp(value, "\"vimmy\""))
+                setTheme(vimmy);
+            else if (!strcmp(value, "\"kilo\""))
+                setTheme(kilo);
+            else
+                handleConfigError(key);
         } else handleConfigError("(unknown opt)");
     }
 
