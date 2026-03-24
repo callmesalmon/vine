@@ -15,7 +15,6 @@ Requirements
 ------------
 * <https://gcc.gnu.org/install>
 * <https://www.gnu.org/software/make>
-* <https://cmake.org/download>
 * <https://git-scm.com/downloads>
 
 Install

@@ -1,7 +1,10 @@
 all: build
 
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99
+
 build:
-	clang vine.c -o ./vine
+	$(CC) $(CFLAGS) vine.c -o ./vine
 
 install:
-	clang vine.c -o /usr/local/bin/vine
+	$(CC) $(CFLAGS) vine.c -o /usr/local/bin/vine
