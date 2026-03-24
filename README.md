@@ -62,7 +62,7 @@ quit_times <int>            - Amount of times to press <C-Q> until it actully qu
 show_empty_lines <bool>     - Whether or not to show tildes on empty lines
 expand_tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>           - Set colorscheme
-match_quote_brace <bool>    - Match quotes and braces.
+autopair <bool>             - Match quotes and braces.
 ```
 
 Sample:
@@ -77,5 +77,5 @@ show_empty_lines = false
 
 colorscheme = "kilo"
 
-match_quote_brace = true
+autopair = true
 ```

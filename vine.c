@@ -1137,20 +1137,20 @@ void editorMoveCursor(int key) {
     }
 }
 
-static char *opening_quote_brace = "([{\"'";
-static char *closing_quote_brace = ")]}\"'";
+static char *opening_pair = "([{\"'";
+static char *closing_pair = ")]}\"'";
 
-int is_opening_quote_brace(char c) {
-    for (size_t i = 0; i < strlen(opening_quote_brace); i++) {
-        if (c == opening_quote_brace[i])
+int is_opening_pair(char c) {
+    for (size_t i = 0; i < strlen(opening_pair); i++) {
+        if (c == opening_pair[i])
             return 1;
     }
     return 0;
 }
 
-int is_closing_quote_brace(char c) {
-    for (size_t i = 0; i < strlen(closing_quote_brace); i++) {
-        if (c == closing_quote_brace[i])
+int is_closing_pair(char c) {
+    for (size_t i = 0; i < strlen(closing_pair); i++) {
+        if (c == closing_pair[i])
             return 1;
     }
     return 0;
@@ -1189,7 +1189,7 @@ int is_number(char *str) {
 
 // config opts
 static int tab_expand = 0;
-static int match_quote_brace = 0;
+static int auto_pair = 0;
 
 void editorProcessKeypress() {
     static int quit_times = VINE_QUIT_TIMES;
@@ -1287,8 +1287,8 @@ void editorProcessKeypress() {
 
         char local_opening_qb = E.row[E.cy].chars[E.cx - 1];
         char local_closing_qb = E.row[E.cy].chars[E.cx];
-        if (is_opening_quote_brace(local_opening_qb) && c == BACKSPACE) {
-            if (is_closing_quote_brace(local_closing_qb)) {
+        if (is_opening_pair(local_opening_qb) && c == BACKSPACE) {
+            if (is_closing_pair(local_closing_qb)) {
                 editorMoveCursor(ARROW_RIGHT);
                 editorDelChar();
             }
@@ -1330,7 +1330,7 @@ void editorProcessKeypress() {
     case '\'':
         editorInsertChar(c);
 
-        if (match_quote_brace)
+        if (auto_pair)
             editorMatchQuoteBrace(c);
 
         break;
@@ -1433,12 +1433,12 @@ int loadConfig() {
                 setTheme(kilo);
             else
                 handleConfigError(key);
-        } else if (strcmp(key, "match_quote_brace") == 0) {
+        } else if (strcmp(key, "autopair") == 0) {
             if (str_to_bool(value) == -1) {
                 handleConfigError(key);
                 break;
             }
-            match_quote_brace = str_to_bool(value);
+            auto_pair = str_to_bool(value);
         } else handleConfigError("(unknown opt)");
     }
 
