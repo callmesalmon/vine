@@ -1277,7 +1277,7 @@ void editorProcessKeypress() {
     quit_times = E.quit_times;
 }
 
-/* ==================== Init ==================== */
+/* ==================== Config ==================== */
 
 void handleConfigError(char *opt) {
     printf("In ~/.vinerc:\n");
@@ -1358,6 +1358,8 @@ int loadConfig() {
 
     return 0;
 }
+
+/* ==================== Init ==================== */
 
 void initEditor() {
     E.cx             = 0;
