@@ -1187,6 +1187,13 @@ int is_number(char *str) {
     return 1;
 }
 
+int index_of_c(char c, char *s) {
+    for (size_t i = 0; i < strlen(s); i++) {
+        if (c == s[i]) return i;
+    }
+    return -1;
+}
+
 // config opts
 static int tab_expand = 0;
 static int auto_pair = 0;
@@ -1282,21 +1289,27 @@ void editorProcessKeypress() {
     case CTRL_KEY('x'):
         if (c == CTRL_KEY('x')) {
             editorMoveCursor(ARROW_RIGHT);
-            goto x_jmp;
+            goto main_del;
         }
 
-        if (!auto_pair) goto x_jmp;
+        if (!auto_pair) goto main_del;
 
-        char local_opening_qb = E.row[E.cy].chars[E.cx - 1];
-        char local_closing_qb = E.row[E.cy].chars[E.cx];
-        if (is_opening_pair(local_opening_qb) && c == BACKSPACE) {
-            if (is_closing_pair(local_closing_qb)) {
+        char local_opening_pair = E.row[E.cy].chars[E.cx - 1];
+        char local_closing_pair = E.row[E.cy].chars[E.cx];
+
+        if (is_opening_pair(local_opening_pair) && c == BACKSPACE) {
+            int opening_index = index_of_c(local_opening_pair, opening_pair);
+            int closing_index = index_of_c(local_closing_pair, closing_pair);
+
+            if (opening_index == -1 || closing_index == -1) goto main_del;
+
+            if (opening_index == closing_index) {
                 editorMoveCursor(ARROW_RIGHT);
                 editorDelChar();
             }
         }
 
-        x_jmp:
+        main_del:
 
         editorDelChar();
 
