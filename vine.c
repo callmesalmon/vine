@@ -1513,7 +1513,7 @@ int main(int argc, char *argv[]) {
     }
 
     editorSetStatusMessage(
-        "HELP: Ctrl-S = Save | Ctrl-Q = Quit | Ctrl-F = Find | Ctrl-D = Delete line");
+        "HELP: Ctrl-S = Save | Ctrl-Q = Quit | Ctrl-F = Find");
 
     while (1) {
         editorRefreshScreen();
