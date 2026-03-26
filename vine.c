@@ -999,6 +999,8 @@ void editorDrawStatusBar(struct abuf *ab) {
     abAppend(ab, "\x1b[7m", 4);
     char status[80], rstatus[80];
 
+    // if the someone enters a too long filename we replace the last
+    // 3 chars with '.'.
     if (E.filename && strlen(E.filename) > 32) {
         for (int i = 29; i < 32; i++)
             E.filename[i] = '.';
