@@ -75,6 +75,10 @@ quit_times = 2
 
 show_empty_lines = false
 
+" Current colorschemes:
+"   sonokai - an attempted replication of "sonokai"
+"   vimmy   - the vim default colorscheme, at least on my system.
+"   kilo    - the classic kilo default
 colorscheme = "kilo"
 
 autopair = true
