@@ -1164,7 +1164,7 @@ int is_closing_pair(char c) {
     return 0;
 }
 
-void editorMatchQuoteBrace(char first) {
+void editorMatchPair(char first) {
     switch (first) {
         case '(':
             editorInsertChar(')');
@@ -1354,7 +1354,7 @@ void editorProcessKeypress() {
         editorInsertChar(c);
 
         if (auto_pair)
-            editorMatchQuoteBrace(c);
+            editorMatchPair(c);
 
         break;
 
