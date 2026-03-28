@@ -295,6 +295,7 @@ struct editorSyntax HLDB[] = {
 void editorSetStatusMessage(const char *fmt, ...);
 void editorRefreshScreen();
 char *editorPrompt(char *prompt, void (*callback)(char *, int));
+int  evalLine(char *line);
 
 /* ==================== Low level terminal handling ==================== */
 
@@ -745,6 +746,8 @@ char *editorRowsToString(int *buflen) {
 
     return buf;
 }
+
+static int in_editor = 0;
 
 void editorOpen(char *filename) {
     free(E.filename);
@@ -1231,6 +1234,10 @@ void editorProcessKeypress() {
             editorInsertChar(' ');
         break;
 
+    case CTRL_KEY('n'):
+         evalLine(editorPrompt("CMD: %s", NULL));
+         break;
+
     case CTRL_KEY('q'):
         if (E.dirty && quit_times > 0) {
             editorSetStatusMessage("[WARNING] File has unsaved changes. "
@@ -1394,14 +1401,83 @@ void remove_spaces(char* s) {
 }
 
 void handleConfigError(char *opt) {
-    printf("In ~/.vinerc:\n");
-    printf("\t%s: Syntax error!\n", opt);
-    getchar();
+    if (!in_editor) {
+        printf("In ~/.vinerc:\n");
+        printf("\t%s: Syntax error!\n", opt);
+
+        getchar();    
+        
+        return;
+    }
+
+    editorSetStatusMessage("Syntax error!", opt);
 }
 
 #define str_to_bool(s)  \
     (!(strcmp(s, "true")) ? 1 : \
         !(strcmp(s, "false")) ? 0 : -1)
+
+int evalLine(char *line) {
+    char *equals = strchr(line, '=');
+    if (!equals) return 0;
+
+    *equals     = '\0'; /* Null-terminate at '=' to split key */
+    char *key   = line;
+    char *value = equals + 1;
+
+    remove_spaces(key);
+    remove_spaces(value);
+
+    key[strcspn(key, "\r\n")]     = 0;
+    value[strcspn(value, "\r\n")] = 0;
+
+    if (key[0] == '\"') return 0;
+
+    if (strcmp(key, "tab_size") == 0) {
+        if (!is_number(value)) {
+            handleConfigError(key);
+            return 1;
+        }
+        E.tab_stop = atoi(value);
+    } else if (strcmp(key, "quit_times") == 0) {
+        if (!is_number(value)) {
+            handleConfigError(key);
+            return 1;
+        }
+        E.quit_times = atoi(value);
+    } else if (strcmp(key, "show_empty_lines") == 0) {
+        if (str_to_bool(value) == -1) {
+            handleConfigError(key);
+            return 1;
+        }
+        show_empty_lines = str_to_bool(value);
+    } else if (strcmp(key, "expand_tab") == 0) {
+        if (str_to_bool(value) == -1) {
+            handleConfigError(key);
+            return 1;
+        }
+        tab_expand = str_to_bool(value);
+    } else if (strcmp(key, "colorscheme") == 0) {
+        if (!strcmp(value, "\"sonokai\""))
+            setTheme(sonokai);
+        else if (!strcmp(value, "\"vimmy\""))
+            setTheme(vimmy);
+        else if (!strcmp(value, "\"kilo\""))
+            setTheme(kilo);
+        else if (!strcmp(value, "\"aqua\""))
+            setTheme(aqua);
+        else
+            handleConfigError(key);
+    } else if (strcmp(key, "autopair") == 0) {
+        if (str_to_bool(value) == -1) {
+            handleConfigError(key);
+            return 1;
+        }
+        auto_pair = str_to_bool(value);
+    } else handleConfigError("(unknown opt)");
+
+    return 0;
+}
 
 int loadConfig() {
     char *config_file = strcat(getpwuid(getuid())->pw_dir, "/.vinerc");
@@ -1420,63 +1496,7 @@ int loadConfig() {
 
     char line[256];
     while (fgets(line, sizeof(line), file)) {
-        char *equals = strchr(line, '=');
-        if (!equals) continue;
-
-        *equals     = '\0'; /* Null-terminate at '=' to split key */
-        char *key   = line;
-        char *value = equals + 1;
-
-        remove_spaces(key);
-        remove_spaces(value);
-
-        key[strcspn(key, "\r\n")]     = 0;
-        value[strcspn(value, "\r\n")] = 0;
-
-        if (key[0] == '\"') continue;
-
-        if (strcmp(key, "tab_size") == 0) {
-            if (!is_number(value)) {
-                handleConfigError(key);
-                break;
-            }
-            E.tab_stop = atoi(value);
-        } else if (strcmp(key, "quit_times") == 0) {
-            if (!is_number(value)) {
-                handleConfigError(key);
-                break;
-            }
-            E.quit_times = atoi(value);
-        } else if (strcmp(key, "show_empty_lines") == 0) {
-            if (str_to_bool(value) == -1) {
-                handleConfigError(key);
-                break;
-            }
-            show_empty_lines = str_to_bool(value);
-        } else if (strcmp(key, "expand_tab") == 0) {
-            if (str_to_bool(value) == -1) {
-                handleConfigError(key);
-                break;
-            }
-            tab_expand = str_to_bool(value);
-        } else if (strcmp(key, "colorscheme") == 0) {
-            if (!strcmp(value, "\"sonokai\""))
-                setTheme(sonokai);
-            else if (!strcmp(value, "\"vimmy\""))
-                setTheme(vimmy);
-            else if (!strcmp(value, "\"kilo\""))
-                setTheme(kilo);
-            else if (!strcmp(value, "\"aqua\""))
-                setTheme(aqua);
-            else
-                handleConfigError(key);
-        } else if (strcmp(key, "autopair") == 0) {
-            if (str_to_bool(value) == -1) {
-                handleConfigError(key);
-                break;
-            }
-            auto_pair = str_to_bool(value);
-        } else handleConfigError("(unknown opt)");
+        evalLine(line);
     }
 
     fclose(file);
@@ -1521,6 +1541,8 @@ int main(int argc, char *argv[]) {
 
     enableRawMode();
     initEditor();
+
+    in_editor = 1;
 
     if (argc >= 2) {
         editorOpen(argv[1]);

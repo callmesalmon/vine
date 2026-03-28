@@ -48,6 +48,7 @@ Ctrl+K - End of line
 Ctrl+O - Open new file
 Ctrl+G - Goto line
 Ctrl+B - Run bash command
+Ctrl+N - Run vine command
 ```
 
 Configuration
