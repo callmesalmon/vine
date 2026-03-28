@@ -160,6 +160,11 @@ const struct editorTheme vimmy = {
     BRIGHT_PURPLE, BLUE, WHITE,
 };
 
+const struct editorTheme aqua = {
+    GREY, PURPLE, BLUE, BRIGHT_PURPLE,
+    BRIGHT_PURPLE, BLUE, WHITE
+};
+
 struct editorTheme T;
 void setTheme(const struct editorTheme theme) {
     T.hl_com  = theme.hl_com;
@@ -1461,6 +1466,8 @@ int loadConfig() {
                 setTheme(vimmy);
             else if (!strcmp(value, "\"kilo\""))
                 setTheme(kilo);
+            else if (!strcmp(value, "\"aqua\""))
+                setTheme(aqua);
             else
                 handleConfigError(key);
         } else if (strcmp(key, "autopair") == 0) {
