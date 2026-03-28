@@ -1261,7 +1261,10 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('b'): {
         char *cmd  = editorPrompt("CMD: %s", NULL);
-        int stat   = system(cmd);
+
+        if (cmd == NULL) break;
+
+        int stat = system(cmd);
 
         editorSetStatusMessage("%s", (!stat) ? "Success!" : "Failure...");
         break;
@@ -1269,6 +1272,8 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('g'): {
         char *line  = editorPrompt("Goto: %s", NULL);
+
+        if (line == NULL) break;
 
         if (!is_number(line)) {
             editorSetStatusMessage("Not a number!");
@@ -1284,6 +1289,8 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('o'): {
         char *fname = editorPrompt("Open: %s", NULL);
+
+        if (fname == NULL) break;
 
         initEditor(); // We need to re-init as to get a clean slate
 
