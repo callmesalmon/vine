@@ -38,17 +38,17 @@ vine <filename>
 Keybinds
 --------
 ```
-Ctrl+S - Save
-Ctrl+Q - Quit
-Ctrl+F - Find
-Ctrl+X - Delete next char
-Ctrl+D - Delete current line
-Ctrl+J - Start of line
-Ctrl+K - End of line
-Ctrl+O - Open new file
-Ctrl+G - Goto line
-Ctrl+B - Run bash command
-Ctrl+N - Run vine command
+^S   - Save
+^Q   - Quit
+^F   - Find
+^X   - Delete next char
+^D   - Delete current line
+^J   - Start of line
+^K   - End of line
+^O   - Open new file
+^G   - Goto line
+^B   - Run shell command
+^C^C - Run vine command
 ```
 
 Configuration

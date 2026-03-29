@@ -1236,12 +1236,28 @@ void editorProcessKeypress() {
             editorInsertChar(' ');
         break;
 
-    case CTRL_KEY('n'): {
-        char *cmd = editorPrompt("CMD: %s", NULL); 
+    case CTRL_KEY('c'): {
+        int ctrl_c_key = editorReadKey();
+        switch (ctrl_c_key) {
+            case CTRL_KEY('c'): {
+                char *cmd = editorPrompt("CMD: %s", NULL); 
+                if (cmd == NULL) break;
+
+                evalLine(cmd);
+                break;
+            }
+        }
+
+        break;
+    }
+
+    case CTRL_KEY('b'): {
+        char *cmd  = editorPrompt("CMD: %s", NULL);
         if (cmd == NULL) break;
 
-        evalLine(cmd);
+        int stat = system(cmd);
 
+        editorSetStatusMessage("%s", (!stat) ? "Success!" : "Failure...");
         break;
     }
 
@@ -1277,17 +1293,6 @@ void editorProcessKeypress() {
     case CTRL_KEY('f'):
         editorFind();
         break;
-
-    case CTRL_KEY('b'): {
-        char *cmd  = editorPrompt("CMD: %s", NULL);
-
-        if (cmd == NULL) break;
-
-        int stat = system(cmd);
-
-        editorSetStatusMessage("%s", (!stat) ? "Success!" : "Failure...");
-        break;
-    }
 
     case CTRL_KEY('g'): {
         char *line  = editorPrompt("Goto: %s", NULL);
