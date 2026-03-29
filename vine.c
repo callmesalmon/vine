@@ -1237,8 +1237,8 @@ void editorProcessKeypress() {
         break;
 
     case CTRL_KEY('n'):
-         evalLine(editorPrompt("CMD: %s", NULL));
-         break;
+        evalLine(editorPrompt("CMD: %s", NULL));
+        break;
 
     case CTRL_KEY('q'):
         if (E.dirty && quit_times > 0) {
