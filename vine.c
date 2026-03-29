@@ -1007,17 +1007,17 @@ void editorDrawStatusBar(struct abuf *ab) {
     abAppend(ab, "\x1b[7m", 4);
     char status[80], rstatus[80];
 
-    char *filename = E.filename;
+    char *displayed_filename = E.filename;
 
     // if the someone enters a too long filename we replace the last
     // 3 chars with '.'.
-    if (filename && strlen(filename) > 32) {
+    if (displayed_filename && strlen(displayed_filename) > 32) {
         for (int i = 29; i < 32; i++)
-            filename[i] = '.';
+            displayed_filename[i] = '.';
     }
 
     int len = snprintf(status, sizeof(status), "%.32s - %d lines %s",
-                       filename ? filename : "[No Name]", E.numrows,
+                       displayed_filename ? displayed_filename : "[No Name]", E.numrows,
                        E.dirty ? "[+]" : "");
     int rlen = snprintf(rstatus, sizeof(rstatus), "%s | %d/%d",
                         E.syntax ? E.syntax->filetype : "[No FT]", E.cy + 1, E.numrows);
