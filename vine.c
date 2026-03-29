@@ -1257,6 +1257,7 @@ void editorProcessKeypress() {
             editorInsertChar(' ');
         break;
 
+    // 'c', in this context, stands for "command"
     case CTRL_KEY('c'): {
         int ctrl_c_key = editorReadKey();
         editorHandleCtrlC(ctrl_c_key);
