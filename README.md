@@ -47,7 +47,7 @@ Keybinds
 ^K   - End of line
 ^O   - Open new file
 ^G   - Goto line
-^B   - Run shell command
+^C^S - Run shell command
 ^C^C - Run vine command
 ```
 

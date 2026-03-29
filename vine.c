@@ -1212,6 +1212,27 @@ int index_of_c(char c, char *s) {
     return -1;
 }
 
+void editorHandleCtrlC(char c) {
+    switch (c) {
+        case CTRL_KEY('c'): {
+            char *cmd = editorPrompt("CMD: %s", NULL); 
+            if (cmd == NULL) break;
+
+            evalLine(cmd);
+            break;
+        }
+        case CTRL_KEY('s'): {
+            char *cmd  = editorPrompt("CMD: %s", NULL);
+            if (cmd == NULL) break;
+
+            int stat = system(cmd);
+
+            editorSetStatusMessage("%s", (!stat) ? "Success!" : "Failure...");
+            break;
+        }
+    }
+}
+
 // config opts
 static int tab_expand = 0;
 static int auto_pair = 0;
@@ -1238,26 +1259,8 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('c'): {
         int ctrl_c_key = editorReadKey();
-        switch (ctrl_c_key) {
-            case CTRL_KEY('c'): {
-                char *cmd = editorPrompt("CMD: %s", NULL); 
-                if (cmd == NULL) break;
+        editorHandleCtrlC(ctrl_c_key);
 
-                evalLine(cmd);
-                break;
-            }
-        }
-
-        break;
-    }
-
-    case CTRL_KEY('b'): {
-        char *cmd  = editorPrompt("CMD: %s", NULL);
-        if (cmd == NULL) break;
-
-        int stat = system(cmd);
-
-        editorSetStatusMessage("%s", (!stat) ? "Success!" : "Failure...");
         break;
     }
 
