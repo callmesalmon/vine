@@ -1236,9 +1236,14 @@ void editorProcessKeypress() {
             editorInsertChar(' ');
         break;
 
-    case CTRL_KEY('n'):
-        evalLine(editorPrompt("CMD: %s", NULL));
+    case CTRL_KEY('n'): {
+        char *cmd = editorPrompt("CMD: %s", NULL); 
+        if (cmd == NULL) break;
+
+        evalLine(cmd);
+
         break;
+    }
 
     case CTRL_KEY('q'):
         if (E.dirty && quit_times > 0) {
