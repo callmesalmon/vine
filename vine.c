@@ -1230,6 +1230,27 @@ int index_of_c(char c, char *s) {
     return -1;
 }
 
+static int auto_pair = 0;
+
+void editorDelMatchingBraces(char c) {
+    if (!auto_pair || E.cx == 0) return;
+
+    char local_opening_pair = E.row[E.cy].chars[E.cx - 1];
+    char local_closing_pair = E.row[E.cy].chars[E.cx];
+
+    if (is_opening_pair(local_opening_pair) && c == BACKSPACE) {
+        int opening_index = index_of_c(local_opening_pair, opening_pair);
+        int closing_index = index_of_c(local_closing_pair, closing_pair);
+
+        if (opening_index == -1 || closing_index == -1) return;
+
+        if (opening_index == closing_index) {
+            editorMoveCursor(ARROW_RIGHT);
+            editorDelChar();
+        }
+    }
+}
+
 void editorHandleCtrlC(char c) {
     switch (c) {
         case CTRL_KEY('c'): {
@@ -1255,7 +1276,8 @@ void editorHandleCtrlX(char c) {
     switch (c) {
     case CTRL_KEY('c'):
         if (E.dirty) {
-            char *yes_no = editorPrompt("[WARNING] File has unsaved changes. Are you sure you want to quit? [y/N] %s", NULL);
+            char *yes_no = editorPrompt("[WARNING] File has unsaved changes."
+                    " Are you sure you want to quit? [y/N] %s", NULL);
             if (yes_no[0] != 'y') return;
         }
         write(STDOUT_FILENO, "\x1b[2J", 4);
@@ -1317,7 +1339,6 @@ int is_meta(unsigned char c) {
 
 // config opts
 static int tab_expand = 0;
-static int auto_pair = 0;
 
 void editorProcessKeypress() {
     int c = editorReadKey();
@@ -1378,27 +1399,12 @@ void editorProcessKeypress() {
     case CTRL_KEY('k'):
         if (c == CTRL_KEY('k')) {
             editorMoveCursor(ARROW_RIGHT);
-            goto main_del;
+            goto k_jmp;
         }
 
-        if (!auto_pair || E.cx == 0) goto main_del;
+        editorDelMatchingBraces(c);
 
-        char local_opening_pair = E.row[E.cy].chars[E.cx - 1];
-        char local_closing_pair = E.row[E.cy].chars[E.cx];
-
-        if (is_opening_pair(local_opening_pair) && c == BACKSPACE) {
-            int opening_index = index_of_c(local_opening_pair, opening_pair);
-            int closing_index = index_of_c(local_closing_pair, closing_pair);
-
-            if (opening_index == -1 || closing_index == -1) goto main_del;
-
-            if (opening_index == closing_index) {
-                editorMoveCursor(ARROW_RIGHT);
-                editorDelChar();
-            }
-        }
-
-        main_del:
+        k_jmp:
 
         editorDelChar();
 
