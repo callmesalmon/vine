@@ -1374,7 +1374,7 @@ void editorProcessKeypress() {
             goto main_del;
         }
 
-        if (!auto_pair) goto main_del;
+        if (!auto_pair || E.cx == 0) goto main_del;
 
         char local_opening_pair = E.row[E.cy].chars[E.cx - 1];
         char local_closing_pair = E.row[E.cy].chars[E.cx];
