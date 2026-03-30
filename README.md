@@ -22,6 +22,7 @@ Install
 -------
 ```sh
 git clone https://github.com/callmesalmon/vine ~/vine
+cd ~/vine
 make install # or just "make" if you just want to test out the editor!
 ```
 
