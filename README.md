@@ -3,8 +3,8 @@ VINE Editor
 
 VINE (Very INtuitive Editor) is a fast and intuitive terminal-based text editor based on "kilo",
 (https://github.com/antirez/kilo), a very small text editor. This version has a *lot* of improvements.
-For example more syntax highlighting, more intuitive shortcut and even configuration files (this might
-just be my opinion, but a much better colourscheme as well). It also runs on *just* the C standard library!
+For example more syntax highlighting, more intuitive shortcuts and even configuration files. It also
+runs on *just* the C standard library!
 
 **DISCLAIMER**: This is not a UTF-8 text editor, and I have no idea how to implement it. Sue me.
 
@@ -51,6 +51,8 @@ M-g g   - Goto line
 C-c C-s - Run shell command
 C-c C-c - Run vine command
 ```
+And before you ask: Yes I stole most of these from EMACS. Like they all say: Every non-modal
+terminal editor is destined to become EMACS lite.
 
 Configuration
 -------------
