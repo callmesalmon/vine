@@ -1538,19 +1538,19 @@ int evalLine(char *line) {
 
     if (key[0] == '\"') return 0;
 
-    if (strcmp(key, "tab_size") == 0) {
+    if (strcmp(key, "tab-size") == 0) {
         if (!is_number(value)) {
             handleConfigError(key);
             return 1;
         }
         E.tab_stop = atoi(value);
-    } else if (strcmp(key, "show_empty_lines") == 0) {
+    } else if (strcmp(key, "show-empty-lines") == 0) {
         if (str_to_bool(value) == -1) {
             handleConfigError(key);
             return 1;
         }
         show_empty_lines = str_to_bool(value);
-    } else if (strcmp(key, "expand_tab") == 0) {
+    } else if (strcmp(key, "expand-tab") == 0) {
         if (str_to_bool(value) == -1) {
             handleConfigError(key);
             return 1;

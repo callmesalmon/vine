@@ -67,9 +67,9 @@ Comments may be added, starting with ``"`` like in VimScript.
 
 The following is a list of configuration options:
 ```
-tab_size <int>              - Tab size
-show_empty_lines <bool>     - Whether or not to show tildes on empty lines
-expand_tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
+tab-size <int>              - Tab size
+show-empty-lines <bool>     - Whether or not to show tildes on empty lines
+expand-tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>           - Set colorscheme
 autopair <bool>             - Match quotes and braces.
 ```
@@ -77,10 +77,10 @@ autopair <bool>             - Match quotes and braces.
 Sample:
 ```vim
 " Tab formatting
-tab_size = 2
-expand_tab = true
+tab-size = 2
+expand-tab = true
 
-show_empty_lines = false
+show-empty-lines = false
 
 colorscheme = "kilo"
 
