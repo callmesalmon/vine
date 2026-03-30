@@ -40,6 +40,12 @@
  * 3 upper bits of the key pressed to 0 */
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+/* Fuck my life */
+enum {
+    META_MASK = 0x80u,
+};
+#define META_KEY(c) (META_MASK | (unsigned char)(c))
+
 enum editorKey {
     BACKSPACE  = 127,
     ARROW_LEFT = 1000,
@@ -327,52 +333,64 @@ void enableRawMode() {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) die("tcsetattr");
 }
 
-int editorReadKey() {
+int editorReadKey(void) {
     int nread;
-    char c;
+    unsigned char c;
     while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {
         if (nread == -1 && errno != EAGAIN) die("read");
     }
+    if (c != '\x1b') return (int)c;
 
-    if (c == '\x1b') {
-        char seq[3];
+    // We need to wait for just a sec to be able to "combine"
+    // eventual META + key
+    fd_set rfds;
+    struct timeval tv;
+    FD_ZERO(&rfds);
+    FD_SET(STDIN_FILENO, &rfds);
+    tv.tv_sec = 0;
+    tv.tv_usec = 100000;
 
-        if (read(STDIN_FILENO, &seq[0], 1) != 1) return '\x1b';
+    if (select(STDIN_FILENO + 1, &rfds, NULL, NULL, &tv) <= 0) {
+        return '\x1b';
+    }
+
+    unsigned char seq[3];
+    if (read(STDIN_FILENO, &seq[0], 1) != 1) return '\x1b';
+
+    if (seq[0] == '[') {
         if (read(STDIN_FILENO, &seq[1], 1) != 1) return '\x1b';
-
-        if (seq[0] == '[') {
-            if (seq[1] >= '0' && seq[1] <= '9') {
-                if (read(STDIN_FILENO, &seq[2], 1) != 1) return '\x1b';
-                if (seq[2] == '~') {
-                    switch (seq[1]) {
-                        case '1': return HOME_KEY;
-                        case '4': return END_KEY;
-                        case '5': return PAGE_UP;
-                        case '6': return PAGE_DOWN;
-                        case '7': return HOME_KEY;
-                        case '8': return END_KEY;
-                    }
-                }
-            } else {
+        if (seq[1] >= '0' && seq[1] <= '9') {
+            if (read(STDIN_FILENO, &seq[2], 1) != 1) return '\x1b';
+            if (seq[2] == '~') {
                 switch (seq[1]) {
-                    case 'A': return ARROW_UP;
-                    case 'B': return ARROW_DOWN;
-                    case 'C': return ARROW_RIGHT;
-                    case 'D': return ARROW_LEFT;
-                    case 'H': return HOME_KEY;
-                    case 'F': return END_KEY;
+                    case '1': return HOME_KEY;
+                    case '4': return END_KEY;
+                    case '5': return PAGE_UP;
+                    case '6': return PAGE_DOWN;
+                    case '7': return HOME_KEY;
+                    case '8': return END_KEY;
                 }
             }
-        } else if (seq[0] == 'O') {
+        } else {
             switch (seq[1]) {
+                case 'A': return ARROW_UP;
+                case 'B': return ARROW_DOWN;
+                case 'C': return ARROW_RIGHT;
+                case 'D': return ARROW_LEFT;
                 case 'H': return HOME_KEY;
                 case 'F': return END_KEY;
             }
         }
-        return '\x1b';
+    } else if (seq[0] == 'O') {
+        if (read(STDIN_FILENO, &seq[1], 1) != 1) return '\x1b';
+        switch (seq[1]) {
+            case 'H': return HOME_KEY;
+            case 'F': return END_KEY;
+        }
     } else {
-        return c;
+        return (int)(seq[0] | META_MASK);
     }
+    return '\x1b';
 }
 
 int getCursorPosition(int *rows, int *cols) {
@@ -1233,13 +1251,71 @@ void editorHandleCtrlC(char c) {
     }
 }
 
+void editorHandleCtrlX(char c) {
+    switch (c) {
+    case CTRL_KEY('c'):
+        if (E.dirty) {
+            char *yes_no = editorPrompt("[WARNING] File has unsaved changes. Are you sure you want to quit? [y/N] %s", NULL);
+            if (yes_no[0] != 'y') return;
+        }
+        write(STDOUT_FILENO, "\x1b[2J", 4);
+        write(STDOUT_FILENO, "\x1b[H", 3);
+        exit(0);
+        break;
+
+    case CTRL_KEY('s'):
+        editorSave();
+        break;
+
+    case CTRL_KEY('f'): {
+        char *fname = editorPrompt("Open: %s", NULL);
+
+        if (fname == NULL) break;
+
+        initEditor(); // We need to re-init as to get a clean slate
+
+        editorOpen(fname);
+        editorSetStatusMessage("Successfully opened file \"%s\".", fname);
+
+        break;
+    }
+    }
+}
+
+void editorHandleMetaG(char c) {
+    switch (c) {
+    case 'g': {
+        char *line  = editorPrompt("Goto: %s", NULL);
+
+        if (line == NULL) break;
+
+        if (!is_number(line)) {
+            editorSetStatusMessage("Not a number!");
+            return;
+        }
+        
+        if (atoi(line) > E.numrows) E.cy = E.numrows;
+        else if (atoi(line) < 1) E.cy = 0;
+        else E.cy = atoi(line) - 1;
+
+        break;
+    }
+    case 'j':
+        E.cx = 0;
+        break;
+
+    case 'k':
+        if (E.cy < E.numrows)
+            E.cx = E.row[E.cy].size;
+        break;
+    }
+}
+
 // config opts
 static int tab_expand = 0;
 static int auto_pair = 0;
 
 void editorProcessKeypress() {
-    static int quit_times = VINE_QUIT_TIMES;
-
     int c = editorReadKey();
 
     switch (c) {
@@ -1257,6 +1333,13 @@ void editorProcessKeypress() {
             editorInsertChar(' ');
         break;
 
+    case CTRL_KEY('x'): {
+        int ctrl_x_key = editorReadKey();
+        editorHandleCtrlX(ctrl_x_key);
+
+        break;
+    }
+
     // 'c', in this context, stands for "command"
     case CTRL_KEY('c'): {
         int ctrl_c_key = editorReadKey();
@@ -1265,72 +1348,24 @@ void editorProcessKeypress() {
         break;
     }
 
-    case CTRL_KEY('q'):
-        if (E.dirty && quit_times > 0) {
-            editorSetStatusMessage("[WARNING] File has unsaved changes. "
-                                   "Press Ctrl-Q %d more times to quit.", quit_times);
-            quit_times--;
-            return;
-        }
-        write(STDOUT_FILENO, "\x1b[2J", 4);
-        write(STDOUT_FILENO, "\x1b[H", 3);
-        exit(0);
-        break;
+    case META_KEY('g'): {
+        int meta_g_key = editorReadKey();
+        editorHandleMetaG(meta_g_key);
 
-    case CTRL_KEY('s'):
-        editorSave();
         break;
-
-    case CTRL_KEY('j'):
-        E.cx = 0;
-        break;
-
-    case CTRL_KEY('k'):
-        if (E.cy < E.numrows)
-            E.cx = E.row[E.cy].size;
-        break;
+    }
 
     case CTRL_KEY('d'):
         editorDelRow(E.cy);
         break;
 
-    case CTRL_KEY('f'):
+    case CTRL_KEY('s'):
         editorFind();
         break;
 
-    case CTRL_KEY('g'): {
-        char *line  = editorPrompt("Goto: %s", NULL);
-
-        if (line == NULL) break;
-
-        if (!is_number(line)) {
-            editorSetStatusMessage("Not a number!");
-            return;
-        }
-        
-        if (atoi(line) > E.numrows) E.cy = E.numrows;
-        else if (atoi(line) < 1) E.cy = 0;
-        else E.cy = atoi(line) - 1;
-
-        break;
-    }
-
-    case CTRL_KEY('o'): {
-        char *fname = editorPrompt("Open: %s", NULL);
-
-        if (fname == NULL) break;
-
-        initEditor(); // We need to re-init as to get a clean slate
-
-        editorOpen(fname);
-        editorSetStatusMessage("Successfully opened file \"%s\".", fname);
-
-        break;
-    }
-
     case BACKSPACE:
-    case CTRL_KEY('x'):
-        if (c == CTRL_KEY('x')) {
+    case CTRL_KEY('k'):
+        if (c == CTRL_KEY('k')) {
             editorMoveCursor(ARROW_RIGHT);
             goto main_del;
         }
@@ -1401,8 +1436,6 @@ void editorProcessKeypress() {
         if (!iscntrl(c)) editorInsertChar(c);
         break;
     }
-
-    quit_times = E.quit_times;
 }
 
 /* ==================== Config ==================== */
