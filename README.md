@@ -20,14 +20,15 @@ Requirements
 
 Install
 -------
-To install, firstly clone the repo:
 ```sh
 git clone https://github.com/callmesalmon/vine ~/vine
+make install # or just "make" if you just want to test out the editor!
 ```
 
-After that, you'd want to use ``make`` to initialize an executable:
+Uninstall
+---------
 ```sh
-make # or ``make install`` for installation to /usr/local/bin
+make clean
 ```
 
 Usage

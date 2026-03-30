@@ -20,3 +20,8 @@ install: copy_help_files
 	@sudo $(CC) $(CFLAGS) vine.c -o /usr/local/bin/vine
 	@echo "OK."
 	@echo "Installation completed."
+
+clean:
+	@if [ -d "$(HOME)/.local/share/vine/" ]; then rm -rf $(HOME)/.local/share/vine/; fi
+	@if [ -f "/usr/local/bin/vine" ]; then sudo rm /usr/local/bin/vine; fi
+	@if [ -f "./vine" ]; then rm ./vine; fi
