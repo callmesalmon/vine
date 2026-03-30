@@ -24,8 +24,8 @@ C-x C-s - Save
 C-x C-c - Quit
 C-x C-f - Open new file
 C-s     - Find
-C-k     - Delete next char
-C-d     - Delete current line
+C-d     - Delete next char
+C-k     - Delete current line
 C-h     - Open help screen
 M-f     - Move forward one word
 M-b     - Move backward one word

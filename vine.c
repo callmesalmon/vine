@@ -1413,7 +1413,7 @@ void editorProcessKeypress() {
         break;
     }
 
-    case CTRL_KEY('d'):
+    case CTRL_KEY('k'):
         editorDelRow(E.cy);
         break;
 
@@ -1434,8 +1434,8 @@ void editorProcessKeypress() {
         break;
 
     case BACKSPACE:
-    case CTRL_KEY('k'):
-        if (c == CTRL_KEY('k')) {
+    case CTRL_KEY('d'):
+        if (c == CTRL_KEY('d')) {
             editorMoveCursor(ARROW_RIGHT);
             goto k_jmp;
         }
