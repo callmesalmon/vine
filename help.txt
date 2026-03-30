@@ -1,0 +1,57 @@
+VERY INTUITIVE EDITOR TUTORIAL
+
+This is the help/tutorial/tutor for the Very INtuitive Editor, the mostest inuitivest fork of kilo.
+While editing files at surface level may seem relatively simple, as VINE provides a very GNANO-like
+interface, it actually has quite a lot of depth to it if you learn everything about the editor.
+
+---------------------
+Table of contents
+---------------------
+1. Basic editing
+2. Keyboard shortcuts
+3. Configuration
+---------------------
+
+1. BASIC EDITING
+This'll be no long section, as it is extremely simple. There are no modes in VINE. You just write text
+and move around with the arrow keys.
+
+2. KEYBOARD SHORTCUTS
+VINE provides very GNU EMACS-like keyboard shortcuts, as I find them surprisingly intuitive. Below
+is a list of keyboard shortcuts. Since this is key notation, C-x means Ctrl + x and M-x means Meta + x/Alt + x:
+
+C-x C-s     Save
+C-x C-c     Quit
+C-x C-f     Open new file
+C-s         Find
+C-k         Delete next char
+C-d         Delete current line
+C-h         Open this help menu
+M-g j       Start of line
+M-g k       End of line
+M-g g       Goto line
+C-c C-s     Run shell command
+C-c C-c     Run vine command
+
+3. CONFIGURATION
+The VINE configuration operates using a config file, ~/.vinerc. Comments may be added, starting with " like in VimScript.
+
+The following is a list of configuration options:
+
+tab_size <int>              Tab size
+show_empty_lines <bool>     Whether or not to show tildes on empty lines
+expand_tab <bool>           Whether or not to expand tab to [tab_size] number of spaces.
+colorscheme <str>           Set colorscheme
+autopair <bool>             Match quotes and braces.
+
+And this is my personal config as a small sample:
+
+" Tab formatting
+tab_size = 4
+expand_tab = true
+
+show_empty_lines = false
+
+colorscheme = "vimmy"
+
+autopair = true

@@ -1367,6 +1367,13 @@ void editorProcessKeypress() {
         editorFind();
         break;
 
+    case CTRL_KEY('h'): {
+        initEditor();
+        editorOpen(strcat(getpwuid(getuid())->pw_dir, "/.local/share/vine/help.txt"));
+
+        break;
+    }
+
     case BACKSPACE:
     case CTRL_KEY('k'):
         if (c == CTRL_KEY('k')) {
@@ -1493,12 +1500,6 @@ int evalLine(char *line) {
             return 1;
         }
         E.tab_stop = atoi(value);
-    } else if (strcmp(key, "quit_times") == 0) {
-        if (!is_number(value)) {
-            handleConfigError(key);
-            return 1;
-        }
-        E.quit_times = atoi(value);
     } else if (strcmp(key, "show_empty_lines") == 0) {
         if (str_to_bool(value) == -1) {
             handleConfigError(key);

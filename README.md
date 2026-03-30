@@ -27,7 +27,7 @@ git clone https://github.com/callmesalmon/vine ~/vine
 
 After that, you'd want to use ``make`` to initialize an executable:
 ```sh
-make # or ``sudo make install`` for installation to /usr/local/bin
+make # or ``make install`` for installation to /usr/local/bin
 ```
 
 Usage
@@ -46,6 +46,7 @@ C-x C-f - Open new file
 C-s     - Find
 C-k     - Delete next char
 C-d     - Delete current line
+C-h     - Open help menu
 M-g j   - Start of line
 M-g k   - End of line
 M-g g   - Goto line
@@ -63,7 +64,6 @@ Comments may be added, starting with ``"`` like in VimScript.
 The following is a list of configuration options:
 ```
 tab_size <int>              - Tab size
-quit_times <int>            - Amount of times to press <C-Q> until it actully quits
 show_empty_lines <bool>     - Whether or not to show tildes on empty lines
 expand_tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>           - Set colorscheme
@@ -75,8 +75,6 @@ Sample:
 " Tab formatting
 tab_size = 2
 expand_tab = true
-
-quit_times = 2
 
 show_empty_lines = false
 
