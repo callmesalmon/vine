@@ -48,7 +48,7 @@ C-x C-f - Open new file
 C-s     - Find
 C-k     - Delete next char
 C-d     - Delete current line
-C-h     - Open help menu
+C-h     - Open help screen
 M-g j   - Start of line
 M-g k   - End of line
 M-g g   - Goto line
