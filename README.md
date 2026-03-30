@@ -3,8 +3,9 @@ VINE Editor
 
 VINE (Very INtuitive Editor) is a fast and intuitive terminal-based text editor based on "kilo",
 (https://github.com/antirez/kilo), a very small text editor. This version has a *lot* of improvements.
-For example more syntax highlighting, more intuitive shortcuts and even configuration files. It also
-runs on *just* the C standard library!
+For example more syntax highlighting, more intuitive shortcuts and even configuration files. While I
+*try* to keep the main spirit of Kilo intact, VINE *does* differ in many very fundamental ways, for
+example it does change the keyboard shortcuts a lot.
 
 **DISCLAIMER**: This is not a UTF-8 text editor, and I have no idea how to implement it. Sue me.
 
