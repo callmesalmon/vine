@@ -1311,6 +1311,10 @@ void editorHandleMetaG(char c) {
     }
 }
 
+int is_meta(unsigned char c) {
+    return (c & 0x80) != 0;
+}
+
 // config opts
 static int tab_expand = 0;
 static int auto_pair = 0;
@@ -1433,7 +1437,8 @@ void editorProcessKeypress() {
         break;
 
     default:
-        if (!iscntrl(c)) editorInsertChar(c);
+        if (!iscntrl(c) && !is_meta(c))
+            editorInsertChar(c);
         break;
     }
 }
