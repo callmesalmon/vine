@@ -1173,6 +1173,39 @@ void editorMoveCursor(int key) {
     }
 }
 
+enum {
+    FORWARD,
+    BACKWARD
+};
+
+void editorNavigateWord(int direction) {
+    erow cur_row = E.row[E.cy];
+
+    int pos = E.cx;
+    int times_moved = 0;
+
+    int has_match = 0;
+    while (!has_match) {
+        if (pos == -1 || pos > cur_row.size) {
+            has_match = 1;
+            break;
+        }
+
+        times_moved++;
+
+        if (direction == FORWARD)  pos++;
+        if (direction == BACKWARD) pos--;
+
+        if (cur_row.chars[pos] == ' ' && times_moved > 1) {
+            has_match = 1;
+        }
+    }
+    if (!has_match) return;
+
+    for (int i; i < times_moved; i++)
+        editorMoveCursor((direction == FORWARD) ? ARROW_RIGHT : ARROW_LEFT);
+}
+
 static char *opening_pair = "([{\"'";
 static char *closing_pair = ")]}\"'";
 
@@ -1394,6 +1427,11 @@ void editorProcessKeypress() {
 
         break;
     }
+
+    case META_KEY('f'):
+    case META_KEY('b'):
+        editorNavigateWord((c == META_KEY('f')) ? FORWARD: BACKWARD);
+        break;
 
     case BACKSPACE:
     case CTRL_KEY('k'):

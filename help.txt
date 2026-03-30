@@ -20,18 +20,20 @@ and move around with the arrow keys.
 VINE provides very GNU EMACS-like keyboard shortcuts, as I find them surprisingly intuitive. Below
 is a list of keyboard shortcuts. Since this is key notation, C-x means Ctrl + x and M-x means Meta + x/Alt + x:
 
-C-x C-s     Save
-C-x C-c     Quit
-C-x C-f     Open new file
-C-s         Find
-C-k         Delete next char
-C-d         Delete current line
-C-h         Open this help screen
-M-g j       Start of line
-M-g k       End of line
-M-g g       Goto line
-C-c C-s     Run shell command
-C-c C-c     Run vine command
+C-x C-s - Save
+C-x C-c - Quit
+C-x C-f - Open new file
+C-s     - Find
+C-k     - Delete next char
+C-d     - Delete current line
+C-h     - Open help screen
+M-f     - Move forward one word
+M-b     - Move backward one word
+M-g j   - Start of line
+M-g k   - End of line
+M-g g   - Goto line
+C-c C-s - Run shell command
+C-c C-c - Run vine command
 
 3. CONFIGURATION
 The VINE configuration operates using a config file, ~/.vinerc. Comments may be added, starting with " like in VimScript.

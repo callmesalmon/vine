@@ -49,6 +49,8 @@ C-s     - Find
 C-k     - Delete next char
 C-d     - Delete current line
 C-h     - Open help screen
+M-f     - Move forward one word
+M-b     - Move backward one word
 M-g j   - Start of line
 M-g k   - End of line
 M-g g   - Goto line
