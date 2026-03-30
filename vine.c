@@ -1604,7 +1604,7 @@ int main(int argc, char *argv[]) {
     }
 
     editorSetStatusMessage(
-        "HELP: C-x C-s = Save | C-x C-c = Quit | C-s = Find");
+        "HELP: C-x C-s = Save | C-x C-c = Quit | C-h = Tutorial");
 
     while (1) {
         editorRefreshScreen();
