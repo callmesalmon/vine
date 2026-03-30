@@ -37,6 +37,7 @@ vine <filename>
 
 Keybinds
 --------
+Since this is key notation, ``C-x`` means ``Ctrl + x`` and ``M-x`` means ``Meta + x``/``Alt + x``
 ```
 C-x C-s - Save
 C-x C-c - Quit
