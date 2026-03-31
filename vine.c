@@ -95,6 +95,8 @@ struct editorTheme {
     int hl_num;
     int hl_find;
     int hl_nil;
+    int hl_lnum;
+    int hl_statbar;
     int hl_bg;
 };
 
@@ -178,61 +180,63 @@ const struct editorTheme kilo_theme = {
     CYAN, YELLOW, GREEN, PURPLE,
     RED, BLUE, WHITE,
 
-    BG_DEFAULT
+    WHITE, WHITE, BG_DEFAULT
 };
 
 const struct editorTheme slate_theme = {
     GREY, GREEN, BLUE, YELLOW,
     YELLOW, CYAN, WHITE,
 
-    BG_DEFAULT
+    WHITE, WHITE, BG_DEFAULT
 };
 
 const struct editorTheme evening_theme = {
     BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_YELLOW, BRIGHT_RED,
     BRIGHT_RED, BLUE, WHITE,
 
-    BG_DEFAULT
+    YELLOW, WHITE, BG_DEFAULT
 };
 
 const struct editorTheme elflord_theme = {
     BRIGHT_BLUE, WHITE, BRIGHT_GREEN, BRIGHT_PURPLE,
     PURPLE, BLUE, CYAN,
 
-    BG_BLACK
+    YELLOW, WHITE, BG_BLACK
 };
 
 const struct editorTheme default_theme = {
     GREY, CYAN, PURPLE, GREEN,
     BRIGHT_PURPLE, RED, WHITE,
 
-    BG_DEFAULT
+    GREY, WHITE, BG_DEFAULT
 };
 
 const struct editorTheme light_theme = {
     CYAN, BLUE, RED, BRIGHT_GREEN,
     BRIGHT_GREEN, YELLOW, BLACK,
 
-    BG_WHITE
+    BLACK, BLACK, BG_WHITE
 };
 
 const struct editorTheme quiet_theme = {
     GREY, WHITE, WHITE, WHITE,
     WHITE, WHITE, WHITE,
     
-    BG_BLACK
+    GREY, WHITE, BG_BLACK
 };
 
 struct editorTheme T;
 void setTheme(const struct editorTheme theme) {
-    T.hl_com  = theme.hl_com;
-    T.hl_kw1  = theme.hl_kw1;
-    T.hl_kw2  = theme.hl_kw2;
-    T.hl_str  = theme.hl_str;
-    T.hl_num  = theme.hl_num;
-    T.hl_find = theme.hl_find;
-    T.hl_nil  = theme.hl_nil;
-    T.hl_bg   = theme.hl_bg;
+    T.hl_com        = theme.hl_com;
+    T.hl_kw1        = theme.hl_kw1;
+    T.hl_kw2        = theme.hl_kw2;
+    T.hl_str        = theme.hl_str;
+    T.hl_num        = theme.hl_num;
+    T.hl_find       = theme.hl_find;
+    T.hl_nil        = theme.hl_nil;
+    T.hl_lnum       = theme.hl_lnum;
+    T.hl_statbar    = theme.hl_statbar;
+    T.hl_bg         = theme.hl_bg;
 }
 
 /* ==================== Syntax Highlighting ====================
@@ -1009,7 +1013,7 @@ void editorDrawRows(struct abuf *ab) {
         abAppend(ab, bg, 5);
 
         char fg[16];
-        snprintf(fg, 16, "\x1b[%dm", T.hl_nil);
+        snprintf(fg, 16, "\x1b[%dm", T.hl_lnum);
         abAppend(ab, fg, 5);
 
         int filerow = y + E.rowoff;
@@ -1094,7 +1098,7 @@ void editorDrawStatusBar(struct abuf *ab) {
     char status[80], rstatus[80];
 
     char fg[16];
-    snprintf(fg, 16, "\x1b[%dm", T.hl_nil);
+    snprintf(fg, 16, "\x1b[%dm", T.hl_statbar);
     abAppend(ab, fg, 5);
 
     char *displayed_filename = E.filename;
