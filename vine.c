@@ -139,6 +139,7 @@ void initEditor(); // <--- Configures "E"
  * your themes value.
  */
 
+#define BLACK 30
 #define RED 31
 #define BRIGHT_RED 91
 #define GREEN 32
@@ -206,6 +207,13 @@ const struct editorTheme default_theme = {
     BRIGHT_PURPLE, RED, WHITE,
 
     BG_DEFAULT
+};
+
+const struct editorTheme light_theme = {
+    CYAN, BLUE, RED, BRIGHT_GREEN,
+    BRIGHT_GREEN, YELLOW, BLACK,
+
+    BG_WHITE
 };
 
 const struct editorTheme quiet_theme = {
@@ -1017,6 +1025,10 @@ void editorDrawRows(struct abuf *ab) {
         if (show_empty_lines) abAppend(ab, "~", 1); 
       }
       } else {
+      char linenum_color[16];
+      snprintf(linenum_color, 16, "\x1b[%dm", T.hl_nil);
+      abAppend(ab, linenum_color, 5);
+
       char linenum[32];
       int linenum_len = snprintf(linenum, sizeof(linenum), "%*d ", VINE_LINE_NUMBER_PADDING, filerow + 1);
       if (linenum_len > VINE_LINE_NUMBER_PADDING + 1) {
@@ -1080,6 +1092,10 @@ void editorDrawStatusBar(struct abuf *ab) {
     abAppend(ab, "\x1b[7m", 4);
     char status[80], rstatus[80];
 
+    char fg[16];
+    snprintf(fg, 16, "\x1b[%dm", T.hl_nil);
+    abAppend(ab, fg, 5);
+
     char *displayed_filename = E.filename;
 
     // Let's not show the help filename, it looks bad.
@@ -1120,6 +1136,10 @@ void editorDrawMessageBar(struct abuf *ab) {
     char bg[16];
     snprintf(bg, 16, "\x1b[%dm", T.hl_bg);
     abAppend(ab, bg, 5);
+
+    char fg[16];
+    snprintf(fg, 16, "\x1b[%dm", T.hl_nil);
+    abAppend(ab, fg, 5);
 
     int msglen = strlen(E.statusmsg);
     if (msglen > E.screencols) msglen = E.screencols;
@@ -1641,6 +1661,8 @@ int evalLine(char *line) {
             setTheme(elflord_theme);
         else if (!strcmp(value, "\"quiet\""))
             setTheme(quiet_theme);
+        else if (!strcmp(value, "\"light\""))
+            setTheme(light_theme);
         else
             handleConfigError(key);
     } else if (strcmp(key, "autopair") == 0) {
