@@ -1021,7 +1021,7 @@ void editorDrawRows(struct abuf *ab) {
             if (E.numrows == 0 && y == E.screenrows / 3) {
                 char welcome[128];
                 int welcomelen = snprintf(welcome, sizeof(welcome),
-                "Very INtuitive Editor -- Version %s", VINE_VERSION);
+                "\x1b[%dmVery INtuitive Editor -- Version %s\x1b[%dm", T.hl_nil, VINE_VERSION, T.hl_lnum);
                 if (welcomelen > E.screencols) welcomelen = E.screencols;
                     int padding = (E.screencols - welcomelen) / 2;
                 if (padding && show_empty_lines) {
