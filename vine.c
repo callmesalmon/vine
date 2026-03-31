@@ -1023,6 +1023,10 @@ void editorDrawRows(struct abuf *ab) {
   }
 }
 
+int is_readable(char *filename) {
+    return (access(filename, R_OK) == 0);
+}
+
 int is_writeable(char *filename) {
     return (access(filename, W_OK) == 0);
 }
@@ -1047,7 +1051,7 @@ void editorDrawStatusBar(struct abuf *ab) {
     int len = snprintf(status, sizeof(status), "%.32s - %d lines %s %s",
                        displayed_filename ? displayed_filename : "[No Name]", E.numrows,
                        E.dirty ? "[+]" : "",
-                       (!is_writeable(E.filename) && E.filename) ? "[readonly]" : "");
+                       (!is_writeable(E.filename) && is_readable(E.filename)) ? "[readonly]" : "");
     int rlen = snprintf(rstatus, sizeof(rstatus), "%s | %d/%d",
                         E.syntax ? E.syntax->filetype : "[No FT]", E.cy + 1, E.numrows);
     if (len > E.screencols) len = E.screencols;
