@@ -1007,6 +1007,11 @@ void editorDrawRows(struct abuf *ab) {
         char bg[16];
         snprintf(bg, 16, "\x1b[%dm", T.hl_bg);
         abAppend(ab, bg, 5);
+
+        char fg[16];
+        snprintf(fg, 16, "\x1b[%dm", T.hl_nil);
+        abAppend(ab, fg, 5);
+
         int filerow = y + E.rowoff;
         if (filerow >= E.numrows) {
             if (E.numrows == 0 && y == E.screenrows / 3) {
@@ -1025,10 +1030,6 @@ void editorDrawRows(struct abuf *ab) {
         if (show_empty_lines) abAppend(ab, "~", 1); 
       }
       } else {
-      char linenum_color[16];
-      snprintf(linenum_color, 16, "\x1b[%dm", T.hl_nil);
-      abAppend(ab, linenum_color, 5);
-
       char linenum[32];
       int linenum_len = snprintf(linenum, sizeof(linenum), "%*d ", VINE_LINE_NUMBER_PADDING, filerow + 1);
       if (linenum_len > VINE_LINE_NUMBER_PADDING + 1) {
