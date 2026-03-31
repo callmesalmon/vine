@@ -95,6 +95,7 @@ struct editorTheme {
     int hl_num;
     int hl_find;
     int hl_nil;
+    int hl_bg;
 };
 
 typedef struct erow {
@@ -153,34 +154,65 @@ void initEditor(); // <--- Configures "E"
 #define WHITE 37
 #define GREY 90
 
+#define BG_BLACK   40
+#define BG_RED     41
+#define BG_GREEN   42
+#define BG_YELLOW  43
+#define BG_BLUE    44
+#define BG_MAGENTA 45
+#define BG_CYAN    46
+#define BG_WHITE   47
+#define BG_GREY           100
+#define BG_BRIGHT_RED     101
+#define BG_BRIGHT_GREEN   102
+#define BG_BRIGHT_YELLOW  103
+#define BG_BRIGHT_BLUE    104
+#define BG_BRIGHT_MAGENTA 105
+#define BG_BRIGHT_CYAN    106
+#define BG_BRIGHT_WHITE   107
+
+#define BG_DEFAULT 49
+
 const struct editorTheme kilo_theme = {
     CYAN, YELLOW, GREEN, PURPLE,
-    RED, BLUE, WHITE
+    RED, BLUE, WHITE,
+
+    BG_DEFAULT
 };
 
 const struct editorTheme slate_theme = {
     GREY, GREEN, BLUE, YELLOW,
-    YELLOW, CYAN, WHITE
+    YELLOW, CYAN, WHITE,
+
+    BG_DEFAULT
 };
 
 const struct editorTheme evening_theme = {
     BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_YELLOW, BRIGHT_RED,
-    BRIGHT_RED, BLUE, WHITE
+    BRIGHT_RED, BLUE, WHITE,
+
+    BG_DEFAULT
 };
 
 const struct editorTheme elflord_theme = {
     BRIGHT_BLUE, WHITE, BRIGHT_GREEN, BRIGHT_PURPLE,
-    PURPLE, BLUE, CYAN
+    PURPLE, BLUE, CYAN,
+
+    BG_BLACK
 };
 
 const struct editorTheme default_theme = {
     GREY, CYAN, PURPLE, GREEN,
-    BRIGHT_PURPLE, RED, WHITE
+    BRIGHT_PURPLE, RED, WHITE,
+
+    BG_DEFAULT
 };
 
 const struct editorTheme quiet_theme = {
     GREY, WHITE, WHITE, WHITE,
-    WHITE, WHITE, WHITE
+    WHITE, WHITE, WHITE,
+    
+    BG_BLACK
 };
 
 struct editorTheme T;
@@ -192,6 +224,7 @@ void setTheme(const struct editorTheme theme) {
     T.hl_num  = theme.hl_num;
     T.hl_find = theme.hl_find;
     T.hl_nil  = theme.hl_nil;
+    T.hl_bg   = theme.hl_bg;
 }
 
 /* ==================== Syntax Highlighting ====================
@@ -963,6 +996,9 @@ void editorDrawRows(struct abuf *ab) {
     /* TODO: Add more lines with useful
      * info (like help or something). */
     for (y = 0; y < E.screenrows; y++) {
+        char bg[16];
+        snprintf(bg, 16, "\x1b[%dm", T.hl_bg);
+        abAppend(ab, bg, 5);
         int filerow = y + E.rowoff;
         if (filerow >= E.numrows) {
             if (E.numrows == 0 && y == E.screenrows / 3) {
@@ -1080,10 +1116,17 @@ void editorDrawStatusBar(struct abuf *ab) {
 
 void editorDrawMessageBar(struct abuf *ab) {
     abAppend(ab, "\x1b[K", 3);
+        
+    char bg[16];
+    snprintf(bg, 16, "\x1b[%dm", T.hl_bg);
+    abAppend(ab, bg, 5);
+
     int msglen = strlen(E.statusmsg);
     if (msglen > E.screencols) msglen = E.screencols;
     if (msglen && time(NULL) - E.statusmsg_time < 5)
         abAppend(ab, E.statusmsg, msglen);
+
+    for (int i = 0; i < (E.screencols - msglen); ++i) abAppend(ab, " ", 1);
 }
 
 void editorRefreshScreen() {
