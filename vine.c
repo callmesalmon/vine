@@ -1413,6 +1413,7 @@ void editorHandleCtrlX(char c) {
             if (yes_no[0] != 'y') return;
         }
         write(STDOUT_FILENO, "\x1b[2J", 4);
+        write(STDOUT_FILENO, "\x1b[0m", 4);
         write(STDOUT_FILENO, "\x1b[H", 3);
         exit(0);
         break;
