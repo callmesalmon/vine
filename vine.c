@@ -1032,7 +1032,7 @@ void editorDrawStatusBar(struct abuf *ab) {
 
     // Let's not show the help filename, it looks bad.
     if (displayed_filename && !strcmp(displayed_filename, VINE_HELP_FILE))
-        displayed_filename = "HELP FILE";
+        displayed_filename = "TUTORIAL SCREEN";
 
     // if the someone enters a too long filename we replace the last
     // 3 chars with '.'.
