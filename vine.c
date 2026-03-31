@@ -135,7 +135,7 @@ void initEditor(); // <--- Configures "E"
  * In order add a new theme, define a new (const) struct out of the struct
  * "editorTheme", then add all of the colour values into it in the form of a
  * FG-ANSI colour. Then, just simply change the values of the "T" struct to
- * your themes value
+ * your themes value.
  */
 
 #define RED 31
@@ -153,25 +153,34 @@ void initEditor(); // <--- Configures "E"
 #define WHITE 37
 #define GREY 90
 
-const struct editorTheme sonokai = {
-    GREY, RED, GREEN, BRIGHT_GREEN,
-    PURPLE, BLUE, WHITE,
-};
-
 const struct editorTheme kilo = {
     CYAN, YELLOW, GREEN, PURPLE,
     RED, BLUE, WHITE
 };
 
-// This is what the vim default looks like on my machine
-const struct editorTheme vimmy = {
-    BRIGHT_CYAN, BRIGHT_YELLOW, BRIGHT_GREEN, BRIGHT_PURPLE,
-    BRIGHT_PURPLE, BLUE, WHITE,
+const struct editorTheme slate = {
+    GREY, GREEN, BLUE, YELLOW,
+    YELLOW, CYAN, WHITE
 };
 
-const struct editorTheme aqua = {
-    GREY, PURPLE, BLUE, BRIGHT_PURPLE,
-    BRIGHT_PURPLE, BLUE, WHITE
+const struct editorTheme evening = {
+    BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_YELLOW, BRIGHT_RED,
+    BRIGHT_RED, BLUE, WHITE
+};
+
+const struct editorTheme elflord = {
+    BRIGHT_BLUE, WHITE, BRIGHT_GREEN, BRIGHT_PURPLE,
+    PURPLE, BLUE, CYAN
+};
+
+const struct editorTheme default_ = {
+    CYAN, PURPLE, BLUE, GREEN,
+    YELLOW, RED, WHITE
+};
+
+const struct editorTheme quiet = {
+    GREY, WHITE, WHITE, WHITE,
+    WHITE, WHITE, WHITE
 };
 
 struct editorTheme T;
@@ -998,12 +1007,12 @@ void editorDrawRows(struct abuf *ab) {
             int clen = snprintf(buf, sizeof(buf), "\x1b[%dm", current_color);
             abAppend(ab, buf, clen);
           }
-        } else if (hl[j] == HL_NORMAL) {
+        /*} else if (hl[j] == HL_NORMAL) {
           if (current_color != -1) {
-            abAppend(ab, "\x1b[39m", 5);
+            abAppend(ab, "\x1b[37m", 5);
             current_color = -1;
           }
-          abAppend(ab, &c[j], 1);
+          abAppend(ab, &c[j], 1);*/
         } else {
           int color = editorSyntaxToColour(hl[j]);
           if (color != current_color) {
@@ -1572,14 +1581,18 @@ int evalLine(char *line) {
         }
         tab_expand = str_to_bool(value);
     } else if (strcmp(key, "colorscheme") == 0) {
-        if (!strcmp(value, "\"sonokai\""))
-            setTheme(sonokai);
-        else if (!strcmp(value, "\"vimmy\""))
-            setTheme(vimmy);
+        if (!strcmp(value, "\"default\""))
+            setTheme(default_);
         else if (!strcmp(value, "\"kilo\""))
             setTheme(kilo);
-        else if (!strcmp(value, "\"aqua\""))
-            setTheme(aqua);
+        else if (!strcmp(value, "\"slate\""))
+            setTheme(slate);
+        else if (!strcmp(value, "\"evening\""))
+            setTheme(evening);
+        else if (!strcmp(value, "\"elflord\""))
+            setTheme(elflord);
+        else if (!strcmp(value, "\"quiet\""))
+            setTheme(quiet);
         else
             handleConfigError(key);
     } else if (strcmp(key, "autopair") == 0) {
@@ -1622,7 +1635,7 @@ int loadConfig() {
 
 // something like initEditor for config defaults...
 void initDefaults() {
-    setTheme(sonokai); // default theme
+    setTheme(default_); // default theme
 
     E.tab_stop       = 4;
     E.quit_times     = 3;
