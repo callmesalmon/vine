@@ -1203,14 +1203,19 @@ enum {
 };
 
 void editorNavigateWord(int direction) {
+    if (E.row == NULL)
+        return;
+
     erow cur_row = E.row[E.cy];
 
     int pos = E.cx;
     int times_moved = 0;
 
+    if (cur_row.size == 0) return;
+
     int has_match = 0;
     while (!has_match) {
-        if (pos == -1 || pos > cur_row.size) {
+        if (pos == -1 || pos > cur_row.size || cur_row.chars[pos] == '\0') {
             has_match = 1;
             break;
         }
