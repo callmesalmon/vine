@@ -1148,10 +1148,12 @@ void editorDrawMessageBar(struct abuf *ab) {
 
     int msglen = strlen(E.statusmsg);
     if (msglen > E.screencols) msglen = E.screencols;
-    if (msglen && time(NULL) - E.statusmsg_time < 5)
+    if (msglen && time(NULL) - E.statusmsg_time < 5) {
         abAppend(ab, E.statusmsg, msglen);
+        for (int i = 0; i < (E.screencols - msglen); ++i) abAppend(ab, " ", 1);
+        return;
+    } else for (int i = 0; i < (E.screencols); ++i) abAppend(ab, " ", 1);
 
-    for (int i = 0; i < (E.screencols - msglen); ++i) abAppend(ab, " ", 1);
 }
 
 void editorRefreshScreen() {
