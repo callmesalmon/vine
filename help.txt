@@ -63,14 +63,12 @@ expand-tab <bool>           - Whether or not to expand tab to [tab_size] number 
 colorscheme <str>           - Set colorscheme
 autopair <bool>             - Match quotes and braces.
 
-And this is my personal config as a small sample:
+List of colorschemes (must be in quotes):
 
-" Tab formatting
-tab-size = 4
-expand-tab = true
-
-show-empty-lines = false
-
-colorscheme = "vimmy"
-
-autopair = true
+``default`` - The default colorscheme
+``kilo``    - The good ol' original kilo colorscheme
+``slate``   - Vim's ``slate`` colorscheme, basically.
+``evening`` - Vim's ``evening`` colorscheme.
+``elflord`` - Vim's ``elflord`` colorscheme.
+``quiet``   - A quiet dark theme.
+``light``   - Psychopathic light theme.
