@@ -174,8 +174,8 @@ const struct editorTheme elflord_theme = {
 };
 
 const struct editorTheme default_theme = {
-    CYAN, PURPLE, BLUE, GREEN,
-    YELLOW, RED, WHITE
+    GREY, CYAN, PURPLE, GREEN,
+    BRIGHT_PURPLE, RED, WHITE
 };
 
 const struct editorTheme quiet_theme = {
@@ -225,7 +225,7 @@ char *C_HL_keywords[] = {
     "friend", "using", "new", "noexcept", "not", "not_eq", "nullptr", "operator", "or", "or_eq",
     "reinterpret_cast", "static_assert", "static_cast", "this", "throw", "true", "try", "typeid", 
     "xor", "xor_eq", "#define", "#include", "#if", "#ifdef", "#ifndef", "#endif", "#error",
-    "#warning", "#pragma", "#undef"
+    "#warning", "#pragma", "#undef",
 
     "int|", "long|", "double|", "float|", "char|", "unsigned|", "signed|", "void|", "short|", "auto|",
     "bool|", "size_t|", "enum|", "extern|", "auto|", "register|", "static|", "struct|", "typedef|",
