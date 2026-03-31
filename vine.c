@@ -224,8 +224,8 @@ char *C_HL_keywords[] = {
     "bitand", "bitor", "compl", "const_cast", "delete", "dynamic_cast", "export", "false",
     "friend", "using", "new", "noexcept", "not", "not_eq", "nullptr", "operator", "or", "or_eq",
     "reinterpret_cast", "static_assert", "static_cast", "this", "throw", "true", "try", "typeid", 
-    "xor", "xor_eq", "#define", "#include", "#if", "ifdef", "#ifndef", "#endif", "#error",
-    "#warning", "#pragma",
+    "xor", "xor_eq", "#define", "#include", "#if", "#ifdef", "#ifndef", "#endif", "#error",
+    "#warning", "#pragma", "#undef"
 
     "int|", "long|", "double|", "float|", "char|", "unsigned|", "signed|", "void|", "short|", "auto|",
     "bool|", "size_t|", "enum|", "extern|", "auto|", "register|", "static|", "struct|", "typedef|",
