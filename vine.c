@@ -153,32 +153,32 @@ void initEditor(); // <--- Configures "E"
 #define WHITE 37
 #define GREY 90
 
-const struct editorTheme kilo = {
+const struct editorTheme kilo_theme = {
     CYAN, YELLOW, GREEN, PURPLE,
     RED, BLUE, WHITE
 };
 
-const struct editorTheme slate = {
+const struct editorTheme slate_theme = {
     GREY, GREEN, BLUE, YELLOW,
     YELLOW, CYAN, WHITE
 };
 
-const struct editorTheme evening = {
+const struct editorTheme evening_theme = {
     BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_YELLOW, BRIGHT_RED,
     BRIGHT_RED, BLUE, WHITE
 };
 
-const struct editorTheme elflord = {
+const struct editorTheme elflord_theme = {
     BRIGHT_BLUE, WHITE, BRIGHT_GREEN, BRIGHT_PURPLE,
     PURPLE, BLUE, CYAN
 };
 
-const struct editorTheme default_ = {
+const struct editorTheme default_theme = {
     CYAN, PURPLE, BLUE, GREEN,
     YELLOW, RED, WHITE
 };
 
-const struct editorTheme quiet = {
+const struct editorTheme quiet_theme = {
     GREY, WHITE, WHITE, WHITE,
     WHITE, WHITE, WHITE
 };
@@ -1582,17 +1582,17 @@ int evalLine(char *line) {
         tab_expand = str_to_bool(value);
     } else if (strcmp(key, "colorscheme") == 0) {
         if (!strcmp(value, "\"default\""))
-            setTheme(default_);
+            setTheme(default_theme);
         else if (!strcmp(value, "\"kilo\""))
-            setTheme(kilo);
+            setTheme(kilo_theme);
         else if (!strcmp(value, "\"slate\""))
-            setTheme(slate);
+            setTheme(slate_theme);
         else if (!strcmp(value, "\"evening\""))
-            setTheme(evening);
+            setTheme(evening_theme);
         else if (!strcmp(value, "\"elflord\""))
-            setTheme(elflord);
+            setTheme(elflord_theme);
         else if (!strcmp(value, "\"quiet\""))
-            setTheme(quiet);
+            setTheme(quiet_theme);
         else
             handleConfigError(key);
     } else if (strcmp(key, "autopair") == 0) {
@@ -1635,7 +1635,7 @@ int loadConfig() {
 
 // something like initEditor for config defaults...
 void initDefaults() {
-    setTheme(default_); // default theme
+    setTheme(default_theme); // default theme
 
     E.tab_stop       = 4;
     E.quit_times     = 3;
