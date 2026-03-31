@@ -36,6 +36,9 @@
 #define VINE_LINE_NUMBER_PADDING 4
 #define VINE_QUIT_TIMES 3
 
+#define VINE_HELP_FILE strcat(getpwuid(getuid())->pw_dir, "/.local/share/vine/help.txt")
+#define VINE_CONF_FILE strcat(getpwuid(getuid())->pw_dir, "/.vinerc")
+
 /* This mimics the Ctrl key by switching the
  * 3 upper bits of the key pressed to 0 */
 #define CTRL_KEY(k) ((k) & 0x1f)
@@ -1027,6 +1030,10 @@ void editorDrawStatusBar(struct abuf *ab) {
 
     char *displayed_filename = E.filename;
 
+    // Let's not show the help filename, it looks bad.
+    if (displayed_filename && !strcmp(displayed_filename, VINE_HELP_FILE))
+        displayed_filename = "HELP FILE";
+
     // if the someone enters a too long filename we replace the last
     // 3 chars with '.'.
     if (displayed_filename && strlen(displayed_filename) > 32) {
@@ -1423,7 +1430,7 @@ void editorProcessKeypress() {
 
     case CTRL_KEY('h'): {
         initEditor();
-        editorOpen(strcat(getpwuid(getuid())->pw_dir, "/.local/share/vine/help.txt"));
+        editorOpen(VINE_HELP_FILE);
 
         break;
     }
@@ -1579,7 +1586,7 @@ int evalLine(char *line) {
 }
 
 int loadConfig() {
-    char *config_file = strcat(getpwuid(getuid())->pw_dir, "/.vinerc");
+    char *config_file = VINE_CONF_FILE;
 
     // If we don't do this, the text editor will throw an error
     // just because ~/.vinerc doesn't exist. The problem is all other
