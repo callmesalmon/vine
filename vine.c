@@ -180,7 +180,7 @@ const struct editorTheme kilo_theme = {
     CYAN, YELLOW, GREEN, PURPLE,
     RED, BLUE, WHITE,
 
-    WHITE, WHITE, BG_DEFAULT
+    GREY, WHITE, BG_DEFAULT
 };
 
 const struct editorTheme slate_theme = {
@@ -205,7 +205,7 @@ const struct editorTheme elflord_theme = {
 };
 
 const struct editorTheme default_theme = {
-    GREY, CYAN, PURPLE, GREEN,
+    GREY, CYAN, YELLOW, GREEN,
     BRIGHT_PURPLE, RED, WHITE,
 
     GREY, WHITE, BG_DEFAULT
