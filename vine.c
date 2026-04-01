@@ -212,8 +212,8 @@ const struct editorTheme default_theme = {
 };
 
 const struct editorTheme light_theme = {
-    CYAN, BLUE, RED, BRIGHT_GREEN,
-    BRIGHT_GREEN, YELLOW, BLACK,
+    CYAN, BLUE, RED, GREEN,
+    GREEN, YELLOW, BLACK,
 
     BLACK, BLACK, BG_WHITE
 };
