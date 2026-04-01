@@ -32,7 +32,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-#define VINE_VERSION "1"
+#define VINE_VERSION "1.1"
 #define VINE_LINE_NUMBER_PADDING 4
 #define VINE_QUIT_TIMES 3
 
