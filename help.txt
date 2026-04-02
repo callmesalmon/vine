@@ -15,6 +15,7 @@ Table of contents
 5. Deleting
 6. Commands
 7. Configuration
+8. Colorschemes
 ---------------------
 
 1. EXITING
@@ -53,7 +54,7 @@ You can run system commands with C-c C-s. Note that this only prints if command 
 and not the command output. You can also run VINE configuration commands (see section 7) using
 C-c C-c.
 
-7. CONFIGURATION
+7. BASIC CONFIGURATION
 The VINE configuration operates using a config file, ~/.vinerc. Comments may be added, starting with " like in
 VimScript. The following is a list of configuration options:
 
@@ -62,6 +63,7 @@ show-empty-lines <bool>     - Whether or not to show tildes on empty lines
 expand-tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>           - Set colorscheme
 autopair <bool>             - Match quotes and braces.
+colr-{x} <color>            - Set color of highlight-fields.
 
 List of colorschemes (must be in quotes):
 
@@ -72,3 +74,31 @@ List of colorschemes (must be in quotes):
 ``elflord`` - Vim's ``elflord`` colorscheme.
 ``quiet``   - A quiet dark theme.
 ``light``   - Psychopathic light theme.
+
+8. COLORSCHEMES
+As somewhat mentioned above, VINE *does* provide a very simple way to create and modify colorschemes. Simply put,
+``colr-{field} = {value}``.
+
+The fields are:
+- colr-keyword1
+- colr-keyword2
+- colr-comment
+- colr-number
+- colr-string
+- colr-find
+- colr-default
+- colr-statusbar
+- colr-linenum
+- colr-bg
+
+And the color values are:
+- red
+- green
+- blue
+- purple
+- cyan
+- white
+- black
+- grey
+Additionally, all color values except for white, black and grey have their own bright variations,
+prefixed with "b_", so bright red becomes ``b_red`` and so on...

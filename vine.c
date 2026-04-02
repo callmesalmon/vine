@@ -1605,6 +1605,11 @@ void remove_spaces(char* s) {
     } while ((*s++ = *d++));
 }
 
+int starts_with(const char *s, const char *prefix) {
+    size_t n = strlen(prefix);
+    return strncmp(s, prefix, n) == 0;
+}
+
 void handleConfigError(char *opt) {
     if (!in_editor) {
         printf("In ~/.vinerc:\n");
@@ -1621,6 +1626,63 @@ void handleConfigError(char *opt) {
 #define str_to_bool(s)  \
     (!(strcmp(s, "true")) ? 1 : \
         !(strcmp(s, "false")) ? 0 : -1)
+
+int fg_color_from_config_opt(char *opt) {
+    if (!strcmp(opt, "black")) return BLACK;
+    else if (!strcmp(opt, "red")) return RED;
+    else if (!strcmp(opt, "green")) return GREEN;
+    else if (!strcmp(opt, "yellow")) return YELLOW;
+    else if (!strcmp(opt, "blue")) return BLUE;
+    else if (!strcmp(opt, "purple")) return PURPLE;
+    else if (!strcmp(opt, "cyan")) return CYAN;
+    else if (!strcmp(opt, "white")) return WHITE;
+    else if (!strcmp(opt, "grey")) return GREY;
+    else if (!strcmp(opt, "b_red")) return BRIGHT_RED;
+    else if (!strcmp(opt, "b_green")) return BRIGHT_GREEN;
+    else if (!strcmp(opt, "b_yellow")) return BRIGHT_YELLOW;
+    else if (!strcmp(opt, "b_blue")) return BRIGHT_BLUE;
+    else if (!strcmp(opt, "b_purple")) return BRIGHT_PURPLE;
+    else if (!strcmp(opt, "b_cyan")) return BRIGHT_CYAN;
+    else handleConfigError("colr");
+
+    return -1;
+}
+
+int bg_color_from_config_opt(char *opt) {
+    if (!strcmp(opt, "black")) return BG_BLACK;
+    else if (!strcmp(opt, "red")) return BG_RED;
+    else if (!strcmp(opt, "green")) return BG_GREEN;
+    else if (!strcmp(opt, "yellow")) return BG_YELLOW;
+    else if (!strcmp(opt, "blue")) return BG_BLUE;
+    else if (!strcmp(opt, "purple")) return BG_MAGENTA;
+    else if (!strcmp(opt, "cyan")) return BG_CYAN;
+    else if (!strcmp(opt, "white")) return BG_WHITE;
+    else if (!strcmp(opt, "grey")) return BG_GREY;
+    else if (!strcmp(opt, "b_red")) return BG_BRIGHT_RED;
+    else if (!strcmp(opt, "b_green")) return BG_BRIGHT_GREEN;
+    else if (!strcmp(opt, "b_yellow")) return BG_BRIGHT_YELLOW;
+    else if (!strcmp(opt, "b_blue")) return BG_BRIGHT_BLUE;
+    else if (!strcmp(opt, "b_purple")) return BG_BRIGHT_MAGENTA;
+    else if (!strcmp(opt, "b_cyan")) return BG_BRIGHT_CYAN;
+    else handleConfigError("colr");
+
+    return -1;
+}
+
+int *key_to_theme_field(char *key) {
+    if (!strcmp(key, "keyword1")) return &T.hl_kw1;
+    else if (!strcmp(key, "keyword2")) return &T.hl_kw2;
+    else if (!strcmp(key, "comment")) return &T.hl_com;
+    else if (!strcmp(key, "number")) return &T.hl_num;
+    else if (!strcmp(key, "string")) return &T.hl_str;
+    else if (!strcmp(key, "find")) return &T.hl_find;
+    else if (!strcmp(key, "default")) return &T.hl_nil;
+    else if (!strcmp(key, "linenum")) return &T.hl_lnum;
+    else if (!strcmp(key, "statusbar")) return &T.hl_statbar;
+    else if (!strcmp(key, "bg")) return &T.hl_bg;
+    
+    return NULL;
+}
 
 int evalLine(char *line) {
     char *equals = strchr(line, '=');
@@ -1679,6 +1741,15 @@ int evalLine(char *line) {
             return 1;
         }
         auto_pair = str_to_bool(value);
+    } else if (starts_with(key, "colr-")) {
+        char *type = key + 5;
+        
+        if (key_to_theme_field(type) == NULL) {
+            handleConfigError("colr");
+            return -1;
+        }
+
+        *key_to_theme_field(type) = (!strcmp(type, "bg")) ? bg_color_from_config_opt(value) : fg_color_from_config_opt(value);
     } else handleConfigError("(unknown opt)");
 
     return 0;

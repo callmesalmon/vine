@@ -72,6 +72,7 @@ show-empty-lines <bool>     - Whether or not to show tildes on empty lines
 expand-tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
 colorscheme <str>           - Set colorscheme
 autopair <bool>             - Match quotes and braces.
+colr-{x} <color>            - Set color of highlight-fields.
 ```
 
 Sample:
