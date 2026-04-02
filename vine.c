@@ -341,7 +341,7 @@ struct editorSyntax HLDB[] = {
         "Python",
         PY_HL_extensions,
         PY_HL_keywords,
-        "#", "\"\"\"", "\"\"\"",
+        "#", NULL, NULL,
         HL_HIGHLIGHT_NUMBERS | HL_HIGHLIGHT_STRINGS,
     },
     {
