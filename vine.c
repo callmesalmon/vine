@@ -1664,6 +1664,7 @@ int bg_color_from_config_opt(char *opt) {
     else if (!strcmp(opt, "b_blue")) return BG_BRIGHT_BLUE;
     else if (!strcmp(opt, "b_purple")) return BG_BRIGHT_MAGENTA;
     else if (!strcmp(opt, "b_cyan")) return BG_BRIGHT_CYAN;
+    else if (!strcmp(opt, "clear")) return BG_DEFAULT;
     else handleConfigError("colr");
 
     return -1;
