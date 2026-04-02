@@ -187,14 +187,14 @@ const struct editorTheme slate_theme = {
     GREY, GREEN, BLUE, YELLOW,
     YELLOW, CYAN, WHITE,
 
-    WHITE, WHITE, BG_DEFAULT
+    WHITE, WHITE, BG_GREY
 };
 
 const struct editorTheme evening_theme = {
-    BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_YELLOW, BRIGHT_RED,
-    BRIGHT_RED, BLUE, WHITE,
+    BRIGHT_BLUE, BRIGHT_GREEN, BRIGHT_YELLOW, BRIGHT_PURPLE,
+    BRIGHT_PURPLE, BLUE, WHITE,
 
-    YELLOW, WHITE, BG_DEFAULT
+    YELLOW, WHITE, BG_GREY
 };
 
 const struct editorTheme elflord_theme = {
