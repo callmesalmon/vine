@@ -33,7 +33,6 @@
 #include <pwd.h>
 
 #define VINE_VERSION "1.1"
-#define VINE_LINE_NUMBER_PADDING 4
 #define VINE_QUIT_TIMES 3
 
 #define VINE_HELP_FILE strcat(getpwuid(getuid())->pw_dir, "/.local/share/vine/help.txt")
@@ -127,6 +126,7 @@ struct editorConfig {
     struct termios orig_termios;
     int    tab_stop;
     int    quit_times;
+    int    linenum_padding;
 };
 
 struct editorConfig E;
@@ -996,8 +996,8 @@ void editorScroll() {
     if (E.rx >= E.coloff + E.screencols) {
         E.coloff = E.rx - E.screencols + 1;
     }
-    if (E.rx >= E.coloff + E.screencols - VINE_LINE_NUMBER_PADDING - 1) {
-        E.coloff = E.rx - E.screencols + VINE_LINE_NUMBER_PADDING + 2;
+    if (E.rx >= E.coloff + E.screencols - E.linenum_padding - 1) {
+        E.coloff = E.rx - E.screencols + E.linenum_padding + 2;
     }
 }
 
@@ -1036,10 +1036,12 @@ void editorDrawRows(struct abuf *ab) {
       }
       } else {
       char linenum[32];
-      int linenum_len = snprintf(linenum, sizeof(linenum), "%*d ", VINE_LINE_NUMBER_PADDING, filerow + 1);
-      if (linenum_len > VINE_LINE_NUMBER_PADDING + 1) {
-        linenum_len = VINE_LINE_NUMBER_PADDING + 1;
+      int linenum_len = snprintf(linenum, sizeof(linenum), "%*d ", E.linenum_padding, filerow + 1);
+      if (linenum_len > E.linenum_padding + 1) {
+        linenum_len = E.linenum_padding + 1;
       }
+
+
       abAppend(ab, linenum, linenum_len);
 
       int len = E.row[filerow].rsize - E.coloff;
@@ -1165,13 +1167,18 @@ void editorRefreshScreen() {
   abAppend(&ab, "\x1b[?25l", 6);
   abAppend(&ab, "\x1b[H", 3);
 
+  // We need to do this before editorDrawRows because if not
+  // then it would ALWAYS read the default E.linenum_padding.
+  int linenum_len = snprintf(NULL, 0, "%d", E.numrows);
+  if (linenum_len < E.linenum_padding) linenum_len = E.linenum_padding;
+  else if (linenum_len > E.linenum_padding) E.linenum_padding = linenum_len;
+
+
   editorDrawRows(&ab);
   editorDrawStatusBar(&ab);
   editorDrawMessageBar(&ab);
 
   char buf[32];
-  int linenum_len = snprintf(NULL, 0, "%d", E.numrows);
-  if (linenum_len < VINE_LINE_NUMBER_PADDING) linenum_len = VINE_LINE_NUMBER_PADDING;
   snprintf(buf, sizeof(buf), "\x1b[%d;%dH", (E.cy - E.rowoff) + 1,
                                             (E.rx - E.coloff) + linenum_len + 2);
   abAppend(&ab, buf, strlen(buf));
@@ -1793,18 +1800,19 @@ void initDefaults() {
 }
 
 void initEditor() {
-    E.cx             = 0;
-    E.cy             = 0;
-    E.rx             = 0;
-    E.rowoff         = 0;
-    E.coloff         = 0;
-    E.numrows        = 0;
-    E.row            = NULL;
-    E.dirty          = 0;
-    E.filename       = NULL;
-    E.statusmsg[0]   = '\0';
-    E.statusmsg_time = 0;
-    E.syntax         = NULL;
+    E.cx              = 0;
+    E.cy              = 0;
+    E.rx              = 0;
+    E.rowoff          = 0;
+    E.coloff          = 0;
+    E.numrows         = 0;
+    E.row             = NULL;
+    E.dirty           = 0;
+    E.filename        = NULL;
+    E.statusmsg[0]    = '\0';
+    E.statusmsg_time  = 0;
+    E.syntax          = NULL;
+    E.linenum_padding = 4;
 
     if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
     E.screenrows -= 2;
