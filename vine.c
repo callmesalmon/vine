@@ -136,9 +136,10 @@ void initEditor(); // <--- Configures "E"
 /* ==================== Themes ======================
  *
  * In order add a new theme, define a new (const) struct out of the struct
- * "editorTheme", then add all of the colour values into it in the form of a
- * FG-ANSI colour. Then, just simply change the values of the "T" struct to
- * your themes value.
+ * "editorTheme", then add all of the colour values into it in the form of these
+ * macros. Then, just simply use setTheme() to copy those values into the main struct.
+ *
+ * TODO: Add an easier way to add more colorschemes
  */
 
 #define BLACK 30
