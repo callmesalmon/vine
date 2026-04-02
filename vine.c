@@ -1755,7 +1755,7 @@ int evalLine(char *line) {
         
         if (key_to_theme_field(type) == NULL) {
             handleConfigError("colr");
-            return -1;
+            return 1;
         }
 
         *key_to_theme_field(type) = (!strcmp(type, "bg")) ? bg_color_from_config_opt(value) : fg_color_from_config_opt(value);
