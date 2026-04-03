@@ -144,36 +144,35 @@ void initEditor(); // <--- Configures "E"
 
 #define BLACK 30
 #define RED 31
-#define BRIGHT_RED 91
 #define GREEN 32
-#define BRIGHT_GREEN 92
 #define YELLOW 33
-#define BRIGHT_YELLOW 93
 #define BLUE 34
-#define BRIGHT_BLUE 94
 #define PURPLE 35
-#define BRIGHT_PURPLE 95
 #define CYAN 36
-#define BRIGHT_CYAN 96
 #define WHITE 37
 #define GREY 90
-
-#define BG_BLACK   40
-#define BG_RED     41
-#define BG_GREEN   42
-#define BG_YELLOW  43
-#define BG_BLUE    44
-#define BG_MAGENTA 45
-#define BG_CYAN    46
-#define BG_WHITE   47
-#define BG_GREY           100
-#define BG_BRIGHT_RED     101
-#define BG_BRIGHT_GREEN   102
-#define BG_BRIGHT_YELLOW  103
-#define BG_BRIGHT_BLUE    104
-#define BG_BRIGHT_MAGENTA 105
-#define BG_BRIGHT_CYAN    106
-#define BG_BRIGHT_WHITE   107
+#define BRIGHT_RED 91
+#define BRIGHT_GREEN 92
+#define BRIGHT_YELLOW 93
+#define BRIGHT_BLUE 94
+#define BRIGHT_PURPLE 95
+#define BRIGHT_CYAN 96
+#define BG_BLACK 40
+#define BG_RED 41
+#define BG_GREEN 42
+#define BG_YELLOW 43
+#define BG_BLUE 44
+#define BG_PURPLE 45
+#define BG_CYAN 46
+#define BG_WHITE 47
+#define BG_GREY 100
+#define BG_BRIGHT_RED 101
+#define BG_BRIGHT_GREEN 102
+#define BG_BRIGHT_YELLOW 103
+#define BG_BRIGHT_BLUE 104
+#define BG_BRIGHT_PURPLE 105
+#define BG_BRIGHT_CYAN 106
+#define BG_BRIGHT_WHITE 107
 
 #define BG_DEFAULT 49
 
@@ -1662,7 +1661,7 @@ int bg_color_from_config_opt(char *opt) {
     else if (!strcmp(opt, "green")) return BG_GREEN;
     else if (!strcmp(opt, "yellow")) return BG_YELLOW;
     else if (!strcmp(opt, "blue")) return BG_BLUE;
-    else if (!strcmp(opt, "purple")) return BG_MAGENTA;
+    else if (!strcmp(opt, "purple")) return BG_PURPLE;
     else if (!strcmp(opt, "cyan")) return BG_CYAN;
     else if (!strcmp(opt, "white")) return BG_WHITE;
     else if (!strcmp(opt, "grey")) return BG_GREY;
@@ -1670,7 +1669,7 @@ int bg_color_from_config_opt(char *opt) {
     else if (!strcmp(opt, "b_green")) return BG_BRIGHT_GREEN;
     else if (!strcmp(opt, "b_yellow")) return BG_BRIGHT_YELLOW;
     else if (!strcmp(opt, "b_blue")) return BG_BRIGHT_BLUE;
-    else if (!strcmp(opt, "b_purple")) return BG_BRIGHT_MAGENTA;
+    else if (!strcmp(opt, "b_purple")) return BG_BRIGHT_PURPLE;
     else if (!strcmp(opt, "b_cyan")) return BG_BRIGHT_CYAN;
     else if (!strcmp(opt, "clear")) return BG_DEFAULT;
     else handleConfigError("colr");
