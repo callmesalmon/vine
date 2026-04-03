@@ -157,6 +157,7 @@ void initEditor(); // <--- Configures "E"
 #define BRIGHT_BLUE 94
 #define BRIGHT_PURPLE 95
 #define BRIGHT_CYAN 96
+
 #define BG_BLACK 40
 #define BG_RED 41
 #define BG_GREEN 42
@@ -173,7 +174,6 @@ void initEditor(); // <--- Configures "E"
 #define BG_BRIGHT_PURPLE 105
 #define BG_BRIGHT_CYAN 106
 #define BG_BRIGHT_WHITE 107
-
 #define BG_DEFAULT 49
 
 const struct editorTheme kilo_theme = {
