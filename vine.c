@@ -206,7 +206,7 @@ const struct editorTheme elflord_theme = {
 };
 
 const struct editorTheme default_theme = {
-    GREY, PURPLE, RED, GREEN,
+    GREY, PURPLE, YELLOW, GREEN,
     BRIGHT_PURPLE, BLUE, WHITE,
 
     GREY, WHITE, BG_DEFAULT
