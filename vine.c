@@ -1418,7 +1418,7 @@ void editorHandleCtrlX(char c) {
         if (E.dirty) {
             char *yes_no = editorPrompt("[WARNING] File has unsaved changes."
                     " Are you sure you want to quit? [y/N] %s", NULL);
-            if (yes_no[0] != 'y') return;
+            if (yes_no == NULL || yes_no[0] != 'y') return;
         }
         write(STDOUT_FILENO, "\x1b[2J", 4);
         write(STDOUT_FILENO, "\x1b[0m", 4);
