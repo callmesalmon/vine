@@ -53,6 +53,8 @@ M-f     - Move forward one word
 M-b     - Move backward one word
 M-g j   - Start of line
 M-g k   - End of line
+M-g s   - Start of file
+M-g e   - End of file
 M-g g   - Goto line
 C-c C-s - Run shell command
 C-c C-c - Run vine command

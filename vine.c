@@ -1462,6 +1462,7 @@ void editorHandleMetaG(char c) {
 
         break;
     }
+
     case 'j':
         E.cx = 0;
         break;
@@ -1469,6 +1470,14 @@ void editorHandleMetaG(char c) {
     case 'k':
         if (E.cy < E.numrows)
             E.cx = E.row[E.cy].size;
+        break;
+
+    case 'e':
+        E.cy = E.numrows;
+        break;
+
+    case 's':
+        E.cy = 0;
         break;
     }
 }
