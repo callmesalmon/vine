@@ -1759,14 +1759,21 @@ int evalLine(char *line) {
         }
         auto_pair = str_to_bool(value);
     } else if (starts_with(key, "colr-")) {
-        char *type = key + 5;
+        char *type = key + 5; // 5 is the strlen of 'colr-'
+
+        int color = (!strcmp(type, "bg")) ? bg_color_from_config_opt(value) : fg_color_from_config_opt(value);
         
         if (key_to_theme_field(type) == NULL) {
             handleConfigError("colr");
             return 1;
         }
 
-        *key_to_theme_field(type) = (!strcmp(type, "bg")) ? bg_color_from_config_opt(value) : fg_color_from_config_opt(value);
+        if (color == -1) {
+            handleConfigError("colr");
+            return 1;
+        } 
+
+        *key_to_theme_field(type) = color;
     } else handleConfigError("(unknown opt)");
 
     return 0;
