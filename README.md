@@ -47,6 +47,7 @@ C-x C-c - Quit
 C-x C-f - Open new file
 C-c C-s - Run shell command
 C-c C-c - Run vine command
+C-z     - Suspend VINE
 C-s     - Find
 C-d     - Delete next char
 C-k     - Delete current line

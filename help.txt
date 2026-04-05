@@ -21,7 +21,7 @@ Table of contents
 1. EXITING
 Every terminal editor has to be excruciatingly hard to exit. In VINE's case, you may quit with ``C-x C-c``,
 which EMACS users will find familiar. If you want to test it out you may, however note that this will obviously
-exit you out of the tutorial.
+exit you out of the tutorial. You can also suspend vine using ``C-z``, as you would with any other program.
 
 2. BASIC EDITING
 This'll be no long section, as it is extremely simple. There are no modes in VINE. You just write text

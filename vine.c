@@ -25,6 +25,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <termios.h>
@@ -1483,6 +1484,10 @@ void editorProcessKeypress() {
 
         break;
     }
+
+    case CTRL_KEY('z'):
+        kill(0, SIGTSTP);
+        break;
 
     case META_KEY('g'): {
         char *line  = editorPrompt("Goto: %s", NULL);
