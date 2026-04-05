@@ -1827,7 +1827,25 @@ void initEditor() {
     E.screenrows -= 2;
 }
 
+void handle_cont(int sig) {
+    (void)sig;
+
+    enableRawMode();
+
+    editorSetStatusMessage("Resumed editor.");
+}
+
 int main(int argc, char *argv[]) {
+    struct sigaction sa;
+    sa.sa_handler = handle_cont;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+
+    if (sigaction(SIGCONT, &sa, NULL) == -1) {
+        die("sigaction");
+        return 1;
+    }
+
     initDefaults();
 
     if (loadConfig() == -1) {
