@@ -1444,44 +1444,6 @@ void editorHandleCtrlX(char c) {
     }
 }
 
-void editorHandleMetaG(char c) {
-    switch (c) {
-    case 'g': {
-        char *line  = editorPrompt("Goto: %s", NULL);
-
-        if (line == NULL) break;
-
-        if (!is_number(line)) {
-            editorSetStatusMessage("Not a number!");
-            return;
-        }
-        
-        if (atoi(line) > E.numrows) E.cy = E.numrows;
-        else if (atoi(line) < 1) E.cy = 0;
-        else E.cy = atoi(line) - 1;
-
-        break;
-    }
-
-    case 'j':
-        E.cx = 0;
-        break;
-
-    case 'k':
-        if (E.cy < E.numrows)
-            E.cx = E.row[E.cy].size;
-        break;
-
-    case 'e':
-        E.cy = E.numrows;
-        break;
-
-    case 's':
-        E.cy = 0;
-        break;
-    }
-}
-
 int is_meta(unsigned char c) {
     return (c & 0x80) != 0;
 }
@@ -1523,11 +1485,38 @@ void editorProcessKeypress() {
     }
 
     case META_KEY('g'): {
-        int meta_g_key = editorReadKey();
-        editorHandleMetaG(meta_g_key);
+        char *line  = editorPrompt("Goto: %s", NULL);
+
+        if (line == NULL) break;
+
+        if (!is_number(line)) {
+            editorSetStatusMessage("Not a number!");
+            return;
+        }
+        
+        if (atoi(line) > E.numrows) E.cy = E.numrows;
+        else if (atoi(line) < 1) E.cy = 0;
+        else E.cy = atoi(line) - 1;
 
         break;
     }
+
+    case CTRL_KEY('a'):
+        E.cx = 0;
+        break;
+
+    case CTRL_KEY('e'):
+        if (E.cy < E.numrows)
+            E.cx = E.row[E.cy].size;
+        break;
+
+    case META_KEY('a'):
+        E.cy = 0;
+        break;
+
+    case META_KEY('e'):
+        E.cy = E.numrows;
+        break;
 
     case CTRL_KEY('k'):
         editorDelRow(E.cy);

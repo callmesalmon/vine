@@ -45,19 +45,19 @@ Since this is key notation, ``C-x`` means ``Ctrl + x`` and ``M-x`` means ``Meta 
 C-x C-s - Save
 C-x C-c - Quit
 C-x C-f - Open new file
+C-c C-s - Run shell command
+C-c C-c - Run vine command
 C-s     - Find
 C-d     - Delete next char
 C-k     - Delete current line
 C-h     - Open help screen
 M-f     - Move forward one word
 M-b     - Move backward one word
-M-g j   - Start of line
-M-g k   - End of line
-M-g s   - Start of file
-M-g e   - End of file
-M-g g   - Goto line
-C-c C-s - Run shell command
-C-c C-c - Run vine command
+C-a     - Start of line
+C-e     - End of line
+M-a     - Start of file
+M-e     - End of file
+M-g     - Goto line
 ```
 And before you ask: Yes I stole most of these from EMACS. Like they all say: Every non-modal
 terminal editor is destined to become EMACS lite.

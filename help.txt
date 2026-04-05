@@ -40,11 +40,10 @@ You can edit files in VINE fairly fast using the (naturally) EMACS-like motions.
 using (fwd) M-f and (bwd) M-b. Try it out! Move across this section using M-f and M-b! Note that a "word"
 in VINE is EXCLUSIVELY separated by spaces, i.e "mary,had,a,little,lamb" is ONE WORD.
 
-You may also use the M-g shortcuts. M-g j moves to the start of a line while M-g k moves to the end.
-M-g s move to the start of the FILE, and M-g e moves to the end of the file. Additionally, there is
-the M-g g shortcut, which moves to a specified line.
+C-a moves to the start of a line while C-e moves to the end. M-a moves to the start of the FILE, and C-e
+moves to the end of the file. Additionally, there is the M-g shortcut, which moves to a specified line.
 
-ADDITIONALLY, you may use C-s to find [query] in a file.
+Additionally, you may use C-s to find [query] in a file.
 
 5. DELETING
 You may delete the previous character using BACKSPACE, like usual, but you may also delete the NEXT
