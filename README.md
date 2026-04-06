@@ -7,7 +7,8 @@ For example more syntax highlighting, more intuitive shortcuts and even configur
 *try* to keep the main spirit of Kilo intact, VINE *does* differ in many very fundamental ways, for
 example it does change the keyboard shortcuts a lot.
 
-**DISCLAIMER**: This is not a UTF-8 text editor, and I have no idea how to implement it. Sue me.
+**DISCLAIMER**: This is not a UTF-8 text editor (in fact, VINE, will not even let you type non-ASCII characters),
+and I have no idea how to implement it. Sue me.
 
 [![VINE EDITOR](https://github.com/callmesalmon/vine/raw/main/vineimg.png)](https://github.com/callmesalmon/vine)  
 VINE editing its source code with the default colorscheme (image may be outdated)

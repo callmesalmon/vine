@@ -1292,7 +1292,7 @@ void editorNavigateWord(int direction) {
 
     int has_match = 0;
     while (!has_match) {
-        if (pos == -1 || pos > cur_row.size || cur_row.chars[pos] == '\0') {
+        if (pos == -1 || pos > cur_row.size) {
             has_match = 1;
             break;
         }
@@ -1302,7 +1302,7 @@ void editorNavigateWord(int direction) {
         if (direction == FORWARD)  pos++;
         if (direction == BACKWARD) pos--;
 
-        if (cur_row.chars[pos] == ' ' && times_moved > 1) {
+        if ((cur_row.chars[pos] == ' ' || cur_row.chars[pos] == '\r' || cur_row.chars[pos] == '\n') && times_moved > 1) {
             has_match = 1;
         }
     }
