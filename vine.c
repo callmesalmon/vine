@@ -126,7 +126,6 @@ struct editorConfig {
     struct editorSyntax *syntax;
     struct termios orig_termios;
     int    tab_stop;
-    int    quit_times;
     int    linenum_padding;
 };
 
@@ -1805,7 +1804,6 @@ void initDefaults() {
     setTheme(default_theme); // default theme
 
     E.tab_stop       = 4;
-    E.quit_times     = 3;
 }
 
 void initEditor() {
