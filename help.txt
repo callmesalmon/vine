@@ -15,7 +15,7 @@ Table of contents
 5. Deleting
 6. Commands
 7. Configuration
-8. Colorschemes
+8. Custom colors
 ---------------------
 
 1. EXITING
@@ -75,9 +75,9 @@ List of colorschemes (must be in quotes):
 ``quiet``   - A quiet dark theme.
 ``light``   - Psychopathic light theme.
 
-8. COLORSCHEMES
-As somewhat mentioned above, VINE *does* provide a very simple way to create and modify colorschemes. Simply put,
-``colr-{field} = {value}``.
+8. CUSTOM COLORS
+As somewhat mentioned above, VINE *does* provide a very simple way to modify the syntax highlighting
+colors. Simply put, ``colr-{field} = {value}``.
 
 The fields are:
 - colr-keyword1
