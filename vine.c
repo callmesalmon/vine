@@ -1332,22 +1332,9 @@ int is_closing_pair(char c) {
 }
 
 void editorMatchPair(char first) {
-    switch (first) {
-        case '(':
-            editorInsertChar(')');
-            break;
-        case '[':
-            editorInsertChar(']');
-            break;
-        case '{':
-            editorInsertChar('}');
-            break;
-        case '"':
-            editorInsertChar('"');
-            break;
-        case '\'':
-            editorInsertChar('\'');
-            break;
+    for (size_t i = 0; i < strlen(opening_pair); i++) {
+        if (first == opening_pair[i])
+            editorInsertChar(closing_pair[i]);
     }
     E.cx--;
 }
