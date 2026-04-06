@@ -1570,14 +1570,36 @@ void editorProcessKeypress() {
     case '(':
     case '[':
     case '{':
-    case '"':
-    case '\'':
         editorInsertChar(c);
 
         if (auto_pair)
             editorMatchPair(c);
 
         break;
+
+    case ')':
+    case ']':
+    case '}':
+        if (is_closing_pair(E.row[E.cy].chars[E.cx]))
+            E.cx++;
+        else
+            editorInsertChar(c);
+        break;
+
+    case '"':
+    case '\'':
+        if (is_closing_pair(E.row[E.cy].chars[E.cx])) {
+            E.cx++;
+            break;
+        } else {
+            editorInsertChar(c);
+        }
+
+        if (auto_pair)
+            editorMatchPair(c);
+
+        break;
+
 
     case CTRL_KEY('l'):
     case '\x1b':
