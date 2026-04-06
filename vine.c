@@ -45,7 +45,7 @@
 
 /* Fuck my life */
 enum {
-    META_MASK = 0x80u,
+    META_MASK = 0x80u
 };
 #define META_KEY(c) (META_MASK | (unsigned char)(c))
 
