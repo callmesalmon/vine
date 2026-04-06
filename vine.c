@@ -289,7 +289,7 @@ char *GO_HL_keywords[] = {
     "any|", "error|", "comparable|", NULL
 };
 
-char *PY_HL_extensions[] = { ".py", "pyi", ".xpy", "pyx",
+char *PY_HL_extensions[] = { ".py", ".pyi", ".xpy", ".pyx",
                              ".pyw", ".ipynb", NULL };
 char *PY_HL_keywords[] = {
     "and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else", "except", "exec",
