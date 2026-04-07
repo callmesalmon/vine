@@ -1274,6 +1274,13 @@ void editorMoveCursor(int key) {
     }
 }
 
+int index_of_c(char c, char *s) {
+    for (size_t i = 0; i < strlen(s); i++) {
+        if (c == s[i]) return i;
+    }
+    return -1;
+}
+
 enum {
     FORWARD,
     BACKWARD
@@ -1339,6 +1346,20 @@ void editorMatchPair(char first) {
     E.cx--;
 }
 
+int editorHandleClosingPair(char c) {
+    char next = E.row[E.cy].chars[E.cx];
+
+    if (index_of_c(next, closing_pair) == -1 || index_of_c(c, closing_pair) == -1) return 0;
+
+    if (index_of_c(next, closing_pair) == index_of_c(c, closing_pair)) {
+        E.cx++;
+        return 1;
+    }
+
+    return 0;
+}
+
+
 // is_digit but for an entire string
 int is_number(char *str) {
     for (size_t i = 0; i < strlen(str); i++) {
@@ -1347,13 +1368,6 @@ int is_number(char *str) {
     }
 
     return 1;
-}
-
-int index_of_c(char c, char *s) {
-    for (size_t i = 0; i < strlen(s); i++) {
-        if (c == s[i]) return i;
-    }
-    return -1;
 }
 
 static int auto_pair = 0;
@@ -1570,8 +1584,26 @@ void editorProcessKeypress() {
     case '(':
     case '[':
     case '{':
+        editorInsertChar(c);
+
+        if (auto_pair)
+            editorMatchPair(c);
+
+        break;
+
+    case ')':
+    case ']':
+    case '}':
+        if (!editorHandleClosingPair(c))
+            editorInsertChar(c);
+
+        break;
+
     case '"':
     case '\'':
+        if (editorHandleClosingPair(c))
+            break;
+
         editorInsertChar(c);
 
         if (auto_pair)
