@@ -204,6 +204,13 @@ const struct editorTheme elflord_theme = {
     YELLOW, WHITE, BG_BLACK
 };
 
+const struct editorTheme murphy_theme = {
+    RED, YELLOW, GREY, WHITE,
+    WHITE, BLUE, BRIGHT_GREEN,
+
+    YELLOW, WHITE, BG_BLACK
+};
+
 const struct editorTheme default_theme = {
     BRIGHT_BLUE, BRIGHT_CYAN, GREEN, BRIGHT_YELLOW,
     BRIGHT_RED, BLUE, WHITE,
@@ -1758,6 +1765,8 @@ int evalLine(char *line) {
             setTheme(evening_theme);
         else if (!strcmp(value, "\"elflord\""))
             setTheme(elflord_theme);
+        else if (!strcmp(value, "\"murphy\""))
+            setTheme(murphy_theme);
         else if (!strcmp(value, "\"quiet\""))
             setTheme(quiet_theme);
         else if (!strcmp(value, "\"light\""))

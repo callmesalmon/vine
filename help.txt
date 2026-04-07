@@ -65,13 +65,14 @@ colorscheme <str>           - Set colorscheme
 autopair <bool>             - Match quotes and braces.
 colr-{x} <color>            - Set color of highlight-fields.
 
-List of colorschemes (must be in quotes):
+List of colorschemes (most shamelessly stolen from VIM, my favorite editor):
 
 ``default`` - The default colorscheme
 ``kilo``    - The good ol' original kilo colorscheme
 ``slate``   - Vim's ``slate`` colorscheme, basically.
 ``evening`` - Vim's ``evening`` colorscheme.
 ``elflord`` - Vim's ``elflord`` colorscheme.
+``murphy``  - Vim's ``murphy`` colorscheme.
 ``quiet``   - A quiet dark theme.
 ``light``   - Psychopathic light theme.
 
