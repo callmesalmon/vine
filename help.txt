@@ -36,6 +36,9 @@ Now that you've read this section, close this tutorial and open a new file. Writ
 contents, and then open a new file from within the editor. Do this until you feel comfortable.
 
 4. MOTIONS
+(Note that if possible, you should avoid using ESC as the "META" key for all of these shortcuts, since it is
+known to be buggy.)
+
 You can edit files in VINE fairly fast using the (naturally) EMACS-like motions. You can move across words
 using (fwd) M-f and (bwd) M-b. Try it out! Move across this section using M-f and M-b! Note that a "word"
 in VINE is EXCLUSIVELY separated by spaces, i.e "mary,had,a,little,lamb" is ONE WORD.
