@@ -1,7 +1,7 @@
 all: build
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99
+CFLAGS = -Wall -Wextra -Werror -pedantic -std=c99 -lm
 
 copy_help_files:
 	@echo -n "Copying help files..."

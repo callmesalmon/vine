@@ -32,6 +32,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <pwd.h>
+#include <math.h>
 
 #define VINE_VERSION "1.1"
 #define VINE_QUIT_TIMES 3
@@ -1123,12 +1124,15 @@ void editorDrawStatusBar(struct abuf *ab) {
             displayed_filename[i] = '.';
     }
 
+    int percent_trough_file = (E.cy == 0 || E.numrows == 0) ? 0 : round((double)((E.cy + 1) / (double)(E.numrows)) * 100.0); 
+
     int len = snprintf(status, sizeof(status), "%.32s - %d lines %s %s",
                        displayed_filename ? displayed_filename : "[No Name]", E.numrows,
                        E.dirty ? "[+]" : "",
                        (!is_writeable(E.filename) && is_readable(E.filename)) ? "[readonly]" : "");
-    int rlen = snprintf(rstatus, sizeof(rstatus), "%s | %d/%d",
-                        E.syntax ? E.syntax->filetype : "[No FT]", E.cy + 1, E.numrows);
+    int rlen = snprintf(rstatus, sizeof(rstatus), "%s | %d/%d (%d%%)",
+                        E.syntax ? E.syntax->filetype : "[No FT]",
+                        E.cy + 1, E.numrows, percent_trough_file);
     if (len > E.screencols) len = E.screencols;
     abAppend(ab, status, len);
     while (len < E.screencols) {
