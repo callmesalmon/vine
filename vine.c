@@ -1662,6 +1662,22 @@ void handleConfigError(char *opt) {
     (!(strcmp(s, "true")) ? 1 : \
         !(strcmp(s, "false")) ? 0 : -1)
 
+struct themeKeyVal {
+    char *key;
+    struct editorTheme value;
+};
+
+struct themeKeyVal theme_lookup_table[] = {
+    { "default", default_theme },
+    { "kilo", kilo_theme },
+    { "slate", slate_theme },
+    { "evening", evening_theme },
+    { "elflord", elflord_theme },
+    { "murphy", murphy_theme },
+    { "quiet", quiet_theme },
+    { "light", light_theme }
+};
+
 int fg_color_from_config_opt(char *opt) {
     if (!strcmp(opt, "black")) return BLACK;
     else if (!strcmp(opt, "red")) return RED;
@@ -1755,24 +1771,13 @@ int evalLine(char *line) {
         }
         tab_expand = str_to_bool(value);
     } else if (strcmp(key, "colorscheme") == 0) {
-        if (!strcmp(value, "\"default\""))
-            setTheme(default_theme);
-        else if (!strcmp(value, "\"kilo\""))
-            setTheme(kilo_theme);
-        else if (!strcmp(value, "\"slate\""))
-            setTheme(slate_theme);
-        else if (!strcmp(value, "\"evening\""))
-            setTheme(evening_theme);
-        else if (!strcmp(value, "\"elflord\""))
-            setTheme(elflord_theme);
-        else if (!strcmp(value, "\"murphy\""))
-            setTheme(murphy_theme);
-        else if (!strcmp(value, "\"quiet\""))
-            setTheme(quiet_theme);
-        else if (!strcmp(value, "\"light\""))
-            setTheme(light_theme);
-        else
-            handleConfigError(key);
+        for (size_t i = 0; i < sizeof(theme_lookup_table) / sizeof(theme_lookup_table[0]); i++) {
+            if (!strcmp(value, theme_lookup_table[i].key)) {
+                setTheme(theme_lookup_table[i].value);
+                return 0;
+            }
+        }
+        handleConfigError(key);
     } else if (strcmp(key, "autopair") == 0) {
         if (str_to_bool(value) == -1) {
             handleConfigError(key);

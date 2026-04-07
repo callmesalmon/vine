@@ -87,7 +87,7 @@ expand-tab = true
 
 show-empty-lines = false
 
-colorscheme = "kilo"
+colorscheme = kilo
 
 autopair = true
 ```
