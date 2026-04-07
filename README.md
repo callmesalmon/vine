@@ -43,23 +43,23 @@ Keybinds
 --------
 Since this is key notation, ``C-x`` means ``Ctrl + x`` and ``M-x`` means ``Meta + x``/``Alt + x``
 ```
-C-x C-s - Save
-C-x C-c - Quit
-C-x C-f - Open new file
-C-c C-s - Run shell command
-C-c C-c - Run vine command
-C-z     - Suspend VINE
-C-s     - Find
-C-d     - Delete next char
-C-k     - Delete current line
-C-h     - Open help screen
-M-f     - Move forward one word
-M-b     - Move backward one word
-C-a     - Start of line
-C-e     - End of line
-M-a     - Start of file
-M-e     - End of file
-M-g     - Goto line
+C-x C-s Save
+C-x C-c Quit
+C-x C-f Open new file
+C-c C-s Run shell command
+C-c C-c Run vine command
+C-z     Suspend VINE
+C-s     Find
+C-d     Delete next char
+C-k     Delete current line
+C-h     Open help screen
+M-f     Move forward one word
+M-b     Move backward one word
+C-a     Start of line
+C-e     End of line
+M-a     Start of file
+M-e     End of file
+M-g     Goto line
 ```
 And before you ask: Yes I stole most of these from EMACS. Like they all say: Every non-modal
 terminal editor is destined to become EMACS lite.
@@ -71,12 +71,12 @@ Comments may be added, starting with ``"`` like in VimScript.
 
 The following is a list of configuration options:
 ```
-tab-size <int>              - Tab size
-show-empty-lines <bool>     - Whether or not to show tildes on empty lines
-expand-tab <bool>           - Whether or not to expand tab to [tab_size] number of spaces.
-colorscheme <str>           - Set colorscheme
-autopair <bool>             - Match quotes and braces.
-colr-{x} <color>            - Set color of highlight-fields.
+tab-size <int>              Tab size
+show-empty-lines <bool>     Whether or not to show tildes on empty lines
+expand-tab <bool>           Whether or not to expand tab to [tab_size] number of spaces.
+colorscheme <str>           Set colorscheme
+autopair <bool>             Match quotes and braces.
+colr-{x} <color>            Set color of highlight-fields.
 ```
 
 Sample:
