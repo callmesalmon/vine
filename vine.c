@@ -34,8 +34,7 @@
 #include <pwd.h>
 #include <math.h>
 
-#define VINE_VERSION "1.1"
-#define VINE_QUIT_TIMES 3
+#define VINE_VERSION "1.2"
 
 #define VINE_HELP_FILE strcat(getpwuid(getuid())->pw_dir, "/.local/share/vine/help.txt")
 #define VINE_CONF_FILE strcat(getpwuid(getuid())->pw_dir, "/.vinerc")
