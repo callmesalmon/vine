@@ -1153,6 +1153,8 @@ void editorDrawStatusBar(struct abuf *ab) {
 
     int percent_trough_file = (E.cy == 0 || E.numrows == 0) ? 0 : round((double)((E.cy + 1) / (double)(E.numrows)) * 100.0); 
 
+    if (E.cy + 1 > E.numrows) percent_trough_file = 100;
+
     int len = snprintf(status, sizeof(status), "-- %.32s - %d lines%s%s ",
                        displayed_filename ? displayed_filename : "[No Name]", E.numrows,
                        E.dirty ? " [+]" : "",
