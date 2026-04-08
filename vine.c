@@ -134,15 +134,6 @@ struct editorConfig E;
 
 void initEditor(); // <--- Configures "E"
 
-/* ==================== Themes ======================
- *
- * In order add a new theme, define a new (const) struct out of the struct
- * "editorTheme", then add all of the colour values into it in the form of these
- * macros. Then, just simply use setTheme() to copy those values into the main struct.
- *
- * TODO: Add an easier way to add more colorschemes
- */
-
 #define BLACK 30
 #define RED 31
 #define GREEN 32
@@ -234,18 +225,8 @@ const struct editorTheme quiet_theme = {
 };
 
 struct editorTheme T;
-void setTheme(const struct editorTheme theme) {
-    T.hl_com        = theme.hl_com;
-    T.hl_kw1        = theme.hl_kw1;
-    T.hl_kw2        = theme.hl_kw2;
-    T.hl_str        = theme.hl_str;
-    T.hl_num        = theme.hl_num;
-    T.hl_find       = theme.hl_find;
-    T.hl_nil        = theme.hl_nil;
-    T.hl_lnum       = theme.hl_lnum;
-    T.hl_statbar    = theme.hl_statbar;
-    T.hl_bg         = theme.hl_bg;
-}
+
+#define setTheme(theme) T = theme;
 
 /* ==================== Syntax Highlighting ====================
  *
