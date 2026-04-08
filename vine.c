@@ -553,9 +553,9 @@ void editorUpdateSyntax(erow *row) {
 
         if (E.syntax->flags & HL_HIGHLIGHT_NUMBERS) {
             if ((isdigit(c) && (prev_sep || prev_hl == HL_NUMBER)) ||
-                    ((c == '.' || c == 'x' || c == 'a' || c == 'b' ||
-                    c == 'c' || c == 'd' || c == 'e' || c == 'f') &&
-                    prev_hl == HL_NUMBER)) {
+                    ((c == '.' || tolower(c) == 'x' || tolower(c) == 'a' ||
+                    tolower(c) == 'b' || tolower(c) == 'c' || tolower(c) == 'd' ||
+                    tolower(c) == 'e' || tolower(c) == 'f') && prev_hl == HL_NUMBER)) {
                 row->hl[i] = HL_NUMBER;
                 i++;
                 prev_sep = 0;
