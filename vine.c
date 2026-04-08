@@ -1139,11 +1139,11 @@ void editorDrawStatusBar(struct abuf *ab) {
 
     if (E.cy + 1 > E.numrows) percent_trough_file = 100;
 
-    int len = snprintf(status, sizeof(status), "-- %.32s - %d lines%s%s ",
+    int len = snprintf(status, sizeof(status), "%.32s - %d lines%s%s ",
                        displayed_filename ? displayed_filename : "[No Name]", E.numrows,
                        E.dirty ? " [+]" : "",
                        (!is_writeable(E.filename) && is_readable(E.filename)) ? " [readonly]" : "");
-    int rlen = snprintf(rstatus, sizeof(rstatus), " %s | %d/%d (%d%%) | Column: %d --",
+    int rlen = snprintf(rstatus, sizeof(rstatus), " %s | %d/%d (%d%%) | Column: %d",
                         E.syntax ? E.syntax->filetype : "[No FT]",
                         E.cy + 1, E.numrows, percent_trough_file, E.cx + 1);
     if (len > E.screencols) len = E.screencols;
@@ -1153,7 +1153,7 @@ void editorDrawStatusBar(struct abuf *ab) {
             abAppend(ab, rstatus, rlen);
             break;
         } else {
-            abAppend(ab, "-", 1);
+            abAppend(ab, " ", 1);
             len++;
         }
     }
