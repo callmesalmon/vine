@@ -1563,7 +1563,7 @@ void editorProcessKeypress() {
         break;
 
     case META_KEY('e'):
-        E.cy = E.numrows;
+        E.cy = E.numrows - 1;
         break;
 
     case CTRL_KEY('k'):
