@@ -1011,6 +1011,40 @@ void editorScroll() {
 // vinerc option
 static int show_empty_lines = 1;
 
+void editorDisplayCenteredText(char text[], int text_len, struct abuf *ab) {
+    if (text_len > E.screencols) text_len = E.screencols;
+
+    int padding = 0;
+    padding = (E.screencols - text_len) / 2;
+
+    if (padding && show_empty_lines) {
+        abAppend(ab, (show_empty_lines) ? "~" : " ", 1);
+        padding--;
+    }
+
+    while (padding--) abAppend(ab, " ", 1);
+
+    char text_fg_start[128];
+    int text_fg_start_len = snprintf(text_fg_start, sizeof(text_fg_start), "\x1b[%dm", T.hl_nil);
+
+    char text_fg_end[128];
+    int text_fg_end_len = snprintf(text_fg_end, sizeof(text_fg_end), "\x1b[%dm", T.hl_lnum);
+
+    abAppend(ab, text_fg_start, text_fg_start_len);
+    abAppend(ab, text, text_len);
+    abAppend(ab, text_fg_end, text_fg_end_len);
+}
+
+char *welcome[] = {
+    "VINE - Very INtuitive Editor",
+    "",
+    "Version " VINE_VERSION,
+    "Made with <3 by Salmon",
+    "Licensed under the BSD-2-Clause license",
+    "Type <C-h> for a tutorial",
+};
+
+
 void editorDrawRows(struct abuf *ab) {
     int y;
     /* TODO: Add more lines with useful
@@ -1026,18 +1060,11 @@ void editorDrawRows(struct abuf *ab) {
 
         int filerow = y + E.rowoff;
         if (filerow >= E.numrows) {
-            if (E.numrows == 0 && y == E.screenrows / 3) {
-                char welcome[128];
-                int welcomelen = snprintf(welcome, sizeof(welcome),
-                "\x1b[%dmVery INtuitive Editor -- Version %s\x1b[%dm", T.hl_nil, VINE_VERSION, T.hl_lnum);
-                if (welcomelen > E.screencols) welcomelen = E.screencols;
-                    int padding = (E.screencols - welcomelen) / 2;
-                if (padding && show_empty_lines) {
-                  abAppend(ab, "~", 1);
-          padding--;
-        }
-        while (padding--) abAppend(ab, " ", 1);
-        abAppend(ab, welcome, welcomelen);
+        if (E.numrows == 0 && y == E.screenrows / 3 + (int)(sizeof(welcome) / sizeof(welcome[0])) / 2) {
+            for (size_t i = 0; i < sizeof(welcome) / sizeof(welcome[0]); i++) {
+                editorDisplayCenteredText(welcome[i], strlen(welcome[i]), ab);
+                if (i != sizeof(welcome) / sizeof(welcome[0])) abAppend(ab, "\r\n", 2);
+            }
       } else {
         if (show_empty_lines) abAppend(ab, "~", 1); 
       }
