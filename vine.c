@@ -1228,9 +1228,24 @@ char *editorPrompt(char *prompt, void (*callback)(char *, int)) {
     size_t buflen = 0;
     buf[0] = '\0';
 
+    int prev_chars = 0;
+    for (int i = 0; i < (int)strlen(prompt); i++) {
+        if (prompt[i] == '%') {
+            prev_chars = i;
+            break;
+        }
+    }
+
+    if (prev_chars == 0) return NULL;
+
     while (1) {
         editorSetStatusMessage(prompt, buf);
         editorRefreshScreen();
+
+        char cursor_move[128];
+        int cursor_move_len = snprintf(cursor_move, sizeof(cursor_move),
+            "\033[%d;%luH", E.screenrows + 2, prev_chars + buflen + 1);
+        write(STDOUT_FILENO, cursor_move, cursor_move_len);
 
         int c = editorReadKey();
         if (c == CTRL_KEY('x') || c == BACKSPACE) {
