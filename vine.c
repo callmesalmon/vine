@@ -1256,6 +1256,8 @@ char *editorPrompt(char *prompt, void (*callback)(char *, int)) {
             free(buf);
             return NULL;
         } else if (c == '\r') {
+            write(STDOUT_FILENO, "\033[0;0H", 6);
+
             if (buflen != 0) {
                 editorSetStatusMessage("");
                 if (callback) callback(buf, c);
