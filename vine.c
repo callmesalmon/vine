@@ -1292,8 +1292,10 @@ void editorMoveCursor(int key) {
         if (row && E.cx < row->size) {
             E.cx++;
         } else if (row && E.cx == row->size) {
-            E.cy++;
-            E.cx = 0;
+            if (E.cy + 1 < E.numrows) {
+                E.cx = 0;
+                E.cy++;
+            }
         }
         break;
     case ARROW_UP:
@@ -1302,7 +1304,7 @@ void editorMoveCursor(int key) {
         }
         break;
     case ARROW_DOWN:
-        if (E.cy < E.numrows) {
+        if (E.cy + 1 < E.numrows) {
             E.cy++;
         }
         break;
