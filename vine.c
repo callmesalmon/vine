@@ -1143,9 +1143,9 @@ void editorDrawStatusBar(struct abuf *ab) {
                        displayed_filename ? displayed_filename : "[No Name]", E.numrows,
                        E.dirty ? " [+]" : "",
                        (!is_writeable(E.filename) && is_readable(E.filename)) ? " [readonly]" : "");
-    int rlen = snprintf(rstatus, sizeof(rstatus), " %s | %d/%d (%d%%) --",
+    int rlen = snprintf(rstatus, sizeof(rstatus), " %s | %d/%d (%d%%) | Column: %d --",
                         E.syntax ? E.syntax->filetype : "[No FT]",
-                        E.cy + 1, E.numrows, percent_trough_file);
+                        E.cy + 1, E.numrows, percent_trough_file, E.cx + 1);
     if (len > E.screencols) len = E.screencols;
     abAppend(ab, status, len);
     while (len < E.screencols) {
