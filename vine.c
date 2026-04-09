@@ -977,7 +977,6 @@ void abFree(struct abuf *ab) {
     free(ab->b);
 }
 
-//"\033[?1049h" and "\033[?1049l"
 void editorCloseBuffer() {
     if (!strncmp(TERM, "xterm", 5)) {
         write(STDOUT_FILENO, "\033[?1049l", 8);
