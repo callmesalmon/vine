@@ -1892,14 +1892,9 @@ int loadConfig() {
 
 /* ==================== Init ==================== */
 
-// something like initEditor for config defaults...
-void initDefaults() {
-    setTheme(default_theme); // default theme
-
-    E.tab_stop       = 4;
-}
-
 void initEditor() {
+    setTheme(default_theme);
+
     E.cx              = 0;
     E.cy              = 0;
     E.rx              = 0;
@@ -1913,6 +1908,7 @@ void initEditor() {
     E.statusmsg_time  = 0;
     E.syntax          = NULL;
     E.linenum_padding = 4;
+    E.tab_stop        = 4;
 
     if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
     E.screenrows -= 2;
@@ -1938,7 +1934,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    initDefaults();
+    initEditor();
 
     if (loadConfig() == -1) {
         editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
@@ -1946,7 +1942,6 @@ int main(int argc, char *argv[]) {
 
     enableRawMode();
     editorOpenBuffer();
-    initEditor();
 
     in_editor = 1;
 
