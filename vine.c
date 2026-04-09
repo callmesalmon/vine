@@ -360,6 +360,7 @@ void die(const char *s) {
 
 #define TERM getenv("TERM")
 
+// This function and editorCloseBuffer() should work on most terminals.
 void editorOpenBuffer() {
     if (!strncmp(TERM, "xterm", 5)) {
         write(STDOUT_FILENO, "\033[?1049h", 8);
