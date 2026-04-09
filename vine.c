@@ -1705,17 +1705,21 @@ int starts_with(const char *s, const char *prefix) {
     return strncmp(s, prefix, n) == 0;
 }
 
-void handleConfigError(char *opt) {
+static int parser_at_linenum = 1;
+
+void handleConfigError(char *emsg) {
     if (!in_editor) {
-        printf("In ~/.vinerc:\n");
-        printf("\t%s: Syntax error!\n", opt);
+        printf("Error when parsing config file:\n");
+        printf("Line %d:\n", parser_at_linenum);
+        printf("%s\n", emsg);
+        printf("Press ENTER to continue...");
 
         getchar();    
         
         return;
     }
 
-    editorSetStatusMessage("Syntax error!", opt);
+    editorSetStatusMessage("ERROR: %s", emsg);
 }
 
 #define str_to_bool(s)  \
@@ -1814,19 +1818,19 @@ int evalLine(char *line) {
 
     if (strcmp(key, "tab-size") == 0) {
         if (!is_number(value)) {
-            handleConfigError(key);
+            handleConfigError("Not a number!");
             return 1;
         }
         E.tab_stop = atoi(value);
     } else if (strcmp(key, "show-empty-lines") == 0) {
         if (str_to_bool(value) == -1) {
-            handleConfigError(key);
+            handleConfigError("Not a bool!");
             return 1;
         }
         show_empty_lines = str_to_bool(value);
     } else if (strcmp(key, "expand-tab") == 0) {
         if (str_to_bool(value) == -1) {
-            handleConfigError(key);
+            handleConfigError("Not a bool!");
             return 1;
         }
         tab_expand = str_to_bool(value);
@@ -1837,10 +1841,10 @@ int evalLine(char *line) {
                 return 0;
             }
         }
-        handleConfigError(key);
+        handleConfigError("Invalid colorscheme!");
     } else if (strcmp(key, "autopair") == 0) {
         if (str_to_bool(value) == -1) {
-            handleConfigError(key);
+            handleConfigError("Not a bool!");
             return 1;
         }
         auto_pair = str_to_bool(value);
@@ -1850,17 +1854,17 @@ int evalLine(char *line) {
         int color = (!strcmp(type, "bg")) ? bg_color_from_config_opt(value) : fg_color_from_config_opt(value);
         
         if (key_to_theme_field(type) == NULL) {
-            handleConfigError("colr");
+            handleConfigError("Invalid theme field!");
             return 1;
         }
 
         if (color == -1) {
-            handleConfigError("colr");
+            handleConfigError("Invalid color!");
             return 1;
         } 
 
         *key_to_theme_field(type) = color;
-    } else handleConfigError("(unknown opt)");
+    } else handleConfigError("Unknown config opt!");
 
     return 0;
 }
@@ -1883,6 +1887,8 @@ int loadConfig() {
     char line[256];
     while (fgets(line, sizeof(line), file)) {
         evalLine(line);
+
+        parser_at_linenum++;
     }
 
     fclose(file);
