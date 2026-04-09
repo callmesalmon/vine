@@ -358,6 +358,16 @@ void die(const char *s) {
     exit(1);
 }
 
+#define TERM getenv("TERM")
+
+void editorOpenBuffer() {
+    if (!strncmp(TERM, "xterm", 5)) {
+        write(STDOUT_FILENO, "\033[?1049h", 8);
+    } else {
+        write(STDOUT_FILENO, "\x1b[?47h", 6);
+    }
+}
+
 void disableRawMode() {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1)
         die("tcsetattr");
@@ -966,6 +976,15 @@ void abFree(struct abuf *ab) {
     free(ab->b);
 }
 
+//"\033[?1049h" and "\033[?1049l"
+void editorCloseBuffer() {
+    if (!strncmp(TERM, "xterm", 5)) {
+        write(STDOUT_FILENO, "\033[?1049l", 8);
+    } else {
+        write(STDOUT_FILENO, "\x1b[?47l", 6);
+    }
+}
+
 void editorScroll() {
     E.rx = 0;
     if (E.cy < E.numrows) {
@@ -1467,6 +1486,9 @@ void editorHandleCtrlX(char c) {
         write(STDOUT_FILENO, "\x1b[2J", 4);
         write(STDOUT_FILENO, "\x1b[0m", 4);
         write(STDOUT_FILENO, "\x1b[H", 3);
+        
+        editorCloseBuffer();
+
         exit(0);
         break;
 
@@ -1530,6 +1552,7 @@ void editorProcessKeypress() {
     }
 
     case CTRL_KEY('z'):
+        editorCloseBuffer();
         kill(0, SIGTSTP);
         break;
 
@@ -1899,6 +1922,7 @@ void handle_cont(int sig) {
     (void)sig;
 
     enableRawMode();
+    editorOpenBuffer();
 
     editorSetStatusMessage("Resumed editor.");
 }
@@ -1921,6 +1945,7 @@ int main(int argc, char *argv[]) {
     }
 
     enableRawMode();
+    editorOpenBuffer();
     initEditor();
 
     in_editor = 1;
