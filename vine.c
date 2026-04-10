@@ -308,6 +308,19 @@ char *RUST_HL_keywords[] = {
     "true|", "false|", NULL
 };
 
+char *SHELL_HL_extensions[] = { ".sh", ".bash", ".zsh", ".bashrc", ".zshrc",
+                          ".profile", ".bash_profile",  NULL };
+char *SHELL_HL_keywords[] = {
+    "case", "esac", "if", "fi", "elif", "else", "then", "alias",
+    "expr", "for", "in", "function", "return", "done",
+
+    // Some of the most common shell utilities:
+    "echo", "ls", "cat", "mkdir", "source", "touch", "printf",
+    "write", "read", "command", "exit",
+
+    "local|", "export|", "set|", "true|", "false|", NULL
+};
+
 /* HLDB stands for HighLighting DataBase, and contains
  * the settings and initialization for the syntax highlighting */
 struct editorSyntax HLDB[] = {
@@ -339,6 +352,15 @@ struct editorSyntax HLDB[] = {
         "//", "/*", "*/",
         HL_HIGHLIGHT_NUMBERS | HL_HIGHLIGHT_STRINGS,
     },
+    {
+        "Shell",
+        SHELL_HL_extensions,
+        SHELL_HL_keywords,
+        // Technically there are multiline shell comments,
+        // but they conflict with other highlighting.
+        "#", NULL, NULL,
+        HL_HIGHLIGHT_NUMBERS | HL_HIGHLIGHT_STRINGS,
+    }
 };
 
 #define HLDB_ENTRIES (sizeof(HLDB) / sizeof(*HLDB))
