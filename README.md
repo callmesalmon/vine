@@ -50,6 +50,7 @@ C-c C-s Run shell command
 C-c C-c Run vine command
 C-z     Suspend VINE
 C-s     Find
+M-r     Automatically resize window
 C-d     Delete next char
 C-k     Delete current line
 C-h     Open help screen

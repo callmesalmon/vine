@@ -1620,6 +1620,12 @@ void editorProcessKeypress() {
         editorFind();
         break;
 
+    case META_KEY('r'):
+        if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
+        E.screenrows -= 2;
+
+        break;
+
     case CTRL_KEY('h'): {
         initEditor();
         editorOpen(VINE_HELP_FILE);

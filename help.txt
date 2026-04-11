@@ -16,6 +16,7 @@ Table of contents
 6. Commands
 7. Configuration
 8. Custom colors
+9. Window sizing
 ---------------------
 
 1. EXITING
@@ -106,3 +107,7 @@ And the color values are:
 - grey
 Additionally, all color values except for white, black and grey have their own bright variations,
 prefixed with "b_", so bright red becomes ``b_red`` and so on...
+
+9. WINDOW SIZING
+You can automatically resize the window according to screen/actual window size my using ``M-r``.
+Sadly, VINE does not currently support manual window resizing.
