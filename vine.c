@@ -1894,9 +1894,6 @@ int evalLine(char *line) {
 int loadConfig() {
     char *config_file = VINE_CONF_FILE;
 
-    // If we don't do this, the text editor will throw an error
-    // just because ~/.vinerc doesn't exist. The problem is all other
-    // cases where opening ~/.vinerc returns NULL
     if (access(config_file, F_OK) != 0) {
         return 0;
     }
