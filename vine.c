@@ -1894,13 +1894,9 @@ int evalLine(char *line) {
 int loadConfig() {
     char *config_file = VINE_CONF_FILE;
 
-    if (access(config_file, F_OK) != 0) {
-        return 0;
-    }
-
     FILE *file = fopen(config_file, "r");
     if (!file) {
-        return -1;
+        return 0;
     }
 
     char line[256];
@@ -1960,10 +1956,7 @@ int main(int argc, char *argv[]) {
     }
 
     initEditor();
-
-    if (loadConfig() == -1) {
-        editorSetStatusMessage("ERROR: Couldn't open ~/.vinerc!");
-    }
+    loadConfig();
 
     enableRawMode();
     editorOpenBuffer();
