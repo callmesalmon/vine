@@ -1394,7 +1394,7 @@ void editorNavigateWord(int direction) {
         if (direction == FORWARD)  pos++;
         if (direction == BACKWARD) pos--;
 
-        if ((cur_row.chars[pos] == ' ' || cur_row.chars[pos] == '\r' || cur_row.chars[pos] == '\n') && times_moved > 1) {
+        if ((cur_row.chars[pos] == ' ' || cur_row.chars[pos] == '\r') && times_moved > 1) {
             has_match = 1;
         }
     }
