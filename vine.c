@@ -411,7 +411,7 @@ void enableRawMode() {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) die("tcsetattr");
 }
 
-int editorReadKey(void) {
+int editorReadKey() {
     int nread;
     unsigned char c;
     while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {
@@ -1114,6 +1114,10 @@ void editorDrawRows(struct abuf *ab) {
       int j;
       for (j = 0; j < len; j++) {
         if (iscntrl(c[j])) {
+          char fg[16];
+          snprintf(fg, 16, "\x1b[%dm", T.hl_nil);
+          abAppend(ab, fg, 5);
+
           char sym = (c[j] <= 26) ? '@' + c[j] : '?';
           abAppend(ab, "\x1b[7m", 4);
           abAppend(ab, &sym, 1);
@@ -1476,6 +1480,12 @@ void editorDelMatchingBraces(char c) {
     }
 }
 
+void editorQuoteInsert() {
+    char c = editorReadKey();
+
+    editorInsertChar(c);
+}
+
 void editorHandleCtrlC(char c) {
     switch (c) {
         case CTRL_KEY('c'): {
@@ -1576,6 +1586,11 @@ void editorProcessKeypress() {
     case CTRL_KEY('z'):
         editorCloseBuffer();
         kill(0, SIGTSTP);
+        break;
+
+    case CTRL_KEY('q'):
+        editorQuoteInsert();
+
         break;
 
     case META_KEY('g'): {

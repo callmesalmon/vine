@@ -28,6 +28,8 @@ exit you out of the tutorial. You can also suspend vine using ``C-z``, as you wo
 This'll be no long section, as it is extremely simple. There are no modes in VINE. You just write text
 and move around with the arrow keys. Try it out! It ain't hard!
 
+You can also quote-insert (i. e  insert character as-is) with ``C-q``.
+
 3. SAVING AND OPENING
 While you can open a file using ``vine [filename]``, you might find it useful to open a file while in the editor.
 Therefore, VINE provides ``C-x C-f``. As VINE does not have "multiple buffers" in the way that other editors
