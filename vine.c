@@ -1642,12 +1642,12 @@ void editorProcessKeypress() {
     case CTRL_KEY('d'):
         if (c == CTRL_KEY('d')) {
             editorMoveCursor(ARROW_RIGHT);
-            goto k_jmp;
+            goto d_jmp;
         }
 
         editorDelMatchingBraces(c);
 
-        k_jmp:
+        d_jmp:
 
         editorDelChar();
 
