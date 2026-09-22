@@ -43,7 +43,7 @@
  * 3 upper bits of the key pressed to 0 */
 #define CTRL_KEY(k) ((k) & 0x1f)
 
-/* Fuck my life */
+/* This is also some bit-magic */
 enum {
     META_MASK = 0x80u
 };
@@ -133,6 +133,8 @@ struct editorConfig E;
 
 void initEditor(); // <--- Configures "E"
 
+// TODO: There is probably a cleaner way to structure this
+// entire colorscheme mechanic
 #define BLACK 30
 #define RED 31
 #define GREEN 32
@@ -419,8 +421,8 @@ int editorReadKey() {
     }
     if (c != '\x1b') return (int)c;
 
-    // We need to wait for just a sec to be able to "combine"
-    // eventual META + key
+    // This is probably the worst way to make ESC a regular
+    // key but who uses ESC for their Meta key anyways?
     fd_set rfds;
     struct timeval tv;
     FD_ZERO(&rfds);
@@ -1033,6 +1035,8 @@ void editorScroll() {
 // vinerc option
 static int show_empty_lines = 1;
 
+// The original kilo only had one line of centered text so it didn't need
+// to worry about this. 
 void editorDisplayCenteredText(char text[], int text_len, struct abuf *ab) {
     if (text_len > E.screencols) text_len = E.screencols;
 
@@ -1073,8 +1077,6 @@ char *welcome[] = {
 
 void editorDrawRows(struct abuf *ab) {
     int y;
-    /* TODO: Add more lines with useful
-     * info (like help or something). */
     for (y = 0; y < E.screenrows; y++) {
         char bg[16];
         snprintf(bg, 16, "\x1b[%dm", T.hl_bg);
@@ -1486,6 +1488,9 @@ void editorQuoteInsert() {
     editorInsertChar(c);
 }
 
+// I still can't decide if these editorHandleCtrl functions
+// are cluttery or actually good coding philosophy.
+
 void editorHandleCtrlC(char c) {
     switch (c) {
         case CTRL_KEY('c'): {
@@ -1547,7 +1552,7 @@ int is_meta(unsigned char c) {
     return (c & 0x80) != 0;
 }
 
-// config opts
+// config opt
 static int tab_expand = 0;
 
 void editorProcessKeypress() {
